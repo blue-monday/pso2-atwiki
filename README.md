@@ -7,7 +7,7 @@ clone
 -----
     git clone https://github.com/blue-monday/pso2.git
 
-npmz
+npm
 ---
     npm install
 
