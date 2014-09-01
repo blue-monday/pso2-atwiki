@@ -1,0 +1,46 @@
+@charset "utf-8";
+
+.toppage {
+	@extend .pages-15 !optional;
+}
+
+.pages-15 {
+	#wikibody > h2:first-child {
+		display: none;
+	}
+	.gallery {
+		margin: 0 -20px;
+		background-color: #000;
+
+		&.error {
+			margin-left: 0;
+			margin-right: 0;
+			background-color: inherit;
+		}
+	}
+}
+
+.pages-21,
+.pages-57 {
+	.colorbar {
+		font-size: 0;
+
+		.colorbar-row {
+			width: 100%;
+			height: 5px;
+			margin: 1px;
+		}
+		.colorbar-cell {
+			display: inline-block;
+			height: 100%;
+			@include box-shadow(0 0 0 1px #fff);
+
+			$colors: #333, #de6641, #f2e55c, #39a869, #4784bf, #5d5099, #a55b9a;
+			@for $i from 0 to 7 {
+				&.cell-#{$i} {
+					background-color: nth($colors, $i + 1);
+				}
+			}
+		}
+	}
+}

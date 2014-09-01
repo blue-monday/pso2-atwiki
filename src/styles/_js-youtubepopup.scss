@@ -1,0 +1,81 @@
+@charset "utf-8";
+
+.youtube-popup {
+	position: fixed;
+	border-radius: $border-radius-base;
+	@include safe-rgba(background-color, 0, 0, 0, 0.9, #000);
+	color: #fff;
+
+	&-link {
+		margin-left: 0.5em;
+
+		&:link {
+			text-decoration: none;
+		}
+	}
+	&-titlebar {
+		padding: 4px;
+		text-align: center;
+		overflow: hidden;
+		cursor: default;
+
+		&-buttons {
+			float: right;
+			white-space: nowrap;
+		}
+		&-button {
+			width: 1.5em;
+			cursor: pointer;
+		}
+	}
+	&-videowrapper {
+		@include fluid-sizing(16/9, 30px);
+	}
+	&-timerecorder {
+		@extend .clearfix;
+		padding: 4px;
+
+		table {
+			margin: 0 0 4px;
+			white-space: nowrap;
+			cursor: default;
+
+			th,
+			td {
+				padding: 0 4px;
+				text-align: center;
+			}
+		}
+		.lap {
+			color: #9f9;
+		}
+		&-footer {
+			padding-left: 18px;
+
+			.clip {
+				font-size: 14px;
+				margin-left: -18px;
+				margin-right: 4px;
+				vertical-align: middle;
+				@include opacity(0.5);
+				cursor: default;
+
+				&.ready {
+					@include opacity(1);
+				}
+				&.zeroclipboard-is-active {
+					@include opacity(0.5);
+				}
+			}
+			.format {
+				display: inline-block;
+				width: 100%;
+				border: none;
+				padding: 0;
+				background: none;
+				vertical-align: middle;
+				outline: none;
+			}
+		}
+	}
+}

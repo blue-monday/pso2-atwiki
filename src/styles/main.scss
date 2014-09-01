@@ -1,0 +1,278 @@
+@charset "utf-8";
+
+@import "bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/variables";
+@import "bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/mixins";
+
+@import "bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/normalize";
+@import "bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/print";
+
+@import "bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/buttons";
+
+@import "bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/glyphicons";
+@import "bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/alerts";
+
+@import "bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/utilities";
+
+@import "imports";
+
+@import "base";
+@import "components";
+
+@import "adblock";
+@import "pages";
+@import "js-youtubepopup";
+
+@import "googlefonts-Audiowide";
+
+html {
+	font: 75%/1.6 'Lucida Grande', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+}
+
+body {
+	position: relative;
+	min-width: (200 + 10 * 2)px + (800 + 20 * 2)px;
+	background-color: #fff;
+	color: #333;
+}
+
+#globalNav,
+#globalNavRight {
+	position: fixed !important;
+	background: none !important;
+
+	@media print {
+		display: none;
+	}
+
+	> ul > li {
+		> a {
+			padding-left: 5px !important;
+			background: none !important;
+			text-shadow: 0 1px 2px #000;
+
+			&:hover {
+				background-color: #666 !important;
+			}
+		}
+
+		> ul {
+			@include default-box-shadow;
+
+			a {
+				background-color: rgba(30, 30, 30, 0.9) !important;
+
+				&:hover {
+					background-color: #666 !important;
+				}
+			}
+		}
+	}
+}
+
+#globalNav {
+	height: auto !important;
+	border: none !important;
+	background-color: #333 !important;
+	background-color: rgba(30, 30, 30, 0.9) !important;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.6) !important;
+
+	@at-root {
+		#globalNav_outer {
+			margin-left: 24px - 5px;
+		}
+	}
+}
+
+#container {
+	@at-root {
+		#header {
+			background: url(mainvisual.jpg) no-repeat right -90px #4b80cc;
+
+			h1 {
+				margin: 0;
+				padding: 32px 24px 24px;
+				font-size: 2em;
+				font-family: 'Audiowide', cursive;
+
+				a {
+					color: #fff;
+					text-decoration: none;
+					text-shadow: 1px 1px 2px #000, 0 0 5px #000;
+				}
+			}
+		}
+
+		#wrapper {
+			background-color: #eee;
+
+			@at-root {
+				#menubar {
+					float: left;
+					width: 200px;
+					padding: 0 10px;
+
+					h2,
+					.plugin_recent_day {
+						margin: 10px 0;
+						padding-left: 10px;
+						border-left: 4px solid #666;
+						font-weight: normal;
+					}
+
+					ul {
+						margin: 0 0 20px;
+						list-style-type: none;
+						padding: 0;
+
+						a,
+						.item {
+							display: block;
+							padding: 5px 14px;
+							border-bottom: 1px dashed #ccc;
+							color: inherit;
+							text-decoration: none;
+						}
+
+						a:hover {
+							background-color: #ccc;
+						}
+
+						.row {
+							@extend .clearfix;
+
+							a {
+								float: left;
+							}
+						}
+
+						ul {
+							margin: 0;
+							padding-left: 15px;
+						}
+					}
+
+					.page-counter {
+						margin-bottom: 20px;
+						padding: 10px 14px;
+						background-color: #369;
+						color: #fff;
+					}
+				}
+				#contents {
+					margin: 0 0 0 220px;
+					padding: 0 20px;
+					background-color: #fff;
+					color: #333;
+					overflow: hidden;
+
+					@at-root {
+						#wikibody {
+							margin-bottom: 50px;
+
+							> h2:first-child {
+								font-size: 1em;
+								font-weight: normal;
+								line-height: 1;
+
+								a {
+									color: inherit;
+								}
+							}
+
+							h2[id],
+							h3[id] {
+								font-weight: normal;
+								overflow: hidden;
+							}
+
+							h2[id] {
+								padding: 10px 14px;
+								background-color: #666;
+								color: #fff;
+							}
+
+							h3[id] {
+								padding-left: 10px;
+								border-left: 4px solid #666;
+							}
+
+							table {
+								@include default-box-shadow;
+
+								tr:hover,
+								.atwiki_tr_odd {
+									background-color: #eee;
+								}
+
+								th {
+									background-color: #ccc;
+								}
+							}
+
+							img {
+								max-width: 100%;
+								border: none;
+							}
+
+							.plugin_contents {
+								float: right;
+								margin-left: 10px;
+								padding-right: 20px;
+								@include safe-rgba(background-color, 0, 0, 0, 0.1, #eee);
+
+								> ul {
+									list-style-type: none;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		#footer {
+			padding: 10px 24px;
+			background-color: #369;
+
+			hr {
+				display: none;
+			}
+
+			p {
+				margin: 5px 0 0;
+				text-align: center;
+			}
+
+			a {
+				color: #fff;
+			}
+		}
+	}
+}
+
+#pagetop {
+	position: fixed;
+	right: 20px;
+	bottom: 20px;
+	min-width: 100px;
+	line-height: 100px;
+	@include safe-rgba(background-color, 0, 0, 0, 0.8, #333);
+	@include safe-rgba(color, 255, 255, 255, 1, #fff);
+	text-align: center;
+	text-decoration: none;
+	outline: none;
+	@include transition(transform 0.2s);
+
+	&:hover {
+		@include safe-rgba(background-color, 0, 0, 0, 0.6, #333);
+	}
+
+	&:active {
+		@include transform(scale(0.9) rotate(-360deg));
+		@include transition(none);
+	}
+}
+
+#tarea_wiki {
+	font-family: fixed;
+}
