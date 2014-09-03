@@ -78,6 +78,11 @@ module.exports = function (grunt) {
 					dest: 'dist/styles'
 				}, {
 					expand: true,
+					cwd: 'src/styles',
+					src: ['*.{gif,jpg,png}'],
+					dest: 'dist/styles'
+				}, {
+					expand: true,
 					cwd: 'bower_components/zeroclipboard/dist',
 					src: ['*.swf'],
 					dest: 'dist/scripts'
