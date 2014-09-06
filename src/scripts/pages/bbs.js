@@ -44,7 +44,7 @@ requirejs(['jquery'], function($) {
 			body = $('<span/>').css(readerBodyStyle).html(body);
 
 		else
-			body = body.replace(/Hu|Fi|Ra|Gu|Fo|Te|Br/g, spanClass);
+			body = body.replace(/Bo|Hu|Fi|Ra|Gu|Fo|Te|Br/g, spanClass);
 
 		name = $('<span/>').css(nameStyle).html(name);
 
