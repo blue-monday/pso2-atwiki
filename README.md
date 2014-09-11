@@ -5,7 +5,7 @@ Blue Monday @PSO2 Ship 4
 
 clone
 -----
-    git clone https://github.com/blue-monday/pso2.git
+    git clone https://github.com/blue-monday/pso2-atwiki.git
 
 npm
 ---
