@@ -29,5 +29,7 @@ watch
 
 direct link
 -----------
-javascript: https://rawgit.com/blue-monday/pso2/master/dist/scripts/main.js
-stylesheet: https://rawgit.com/blue-monday/pso2/master/dist/styles/main.css
+
+js: https://rawgit.com/blue-monday/pso2/master/dist/scripts/main.js
+
+css: https://rawgit.com/blue-monday/pso2/master/dist/styles/main.css
