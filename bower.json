@@ -16,7 +16,7 @@
     "fotorama": "~4.6.2",
     "jquery": "~1.11",
     "jquery-cookie": "~1.4.1",
-    "jquery-ui": "~1.11.1",
+    "jquery-ui": "~1.11.2",
     "sticky-kit": "~1.0.4",
     "zeroclipboard": "~2.1.6"
   },
