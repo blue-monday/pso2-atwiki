@@ -23,10 +23,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/blue-monday/pso2.git"
+    "url": "https://github.com/blue-monday/pso2-atwiki.git"
   },
   "bugs": {
-    "url": "https://github.com/blue-monday/pso2/issues"
+    "url": "https://github.com/blue-monday/pso2-atwiki/issues"
   },
-  "homepage": "https://github.com/blue-monday/pso2"
+  "homepage": "https://github.com/blue-monday/pso2-atwiki"
 }
