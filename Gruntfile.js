@@ -92,19 +92,12 @@ module.exports = function (grunt) {
 					src: ['fonts/**'],
 					dest: 'dist'
 				}]
-			},
-			publish: {
 			}
 		}
 	});
 
-	grunt.registerTask('publish', [
-		'build',
-		'copy:publish'
-	]);
-
 	grunt.registerTask('build', [
-		'clean:dist',
+		'clean',
 		'requirejs:dist',
 		'sass_imports',
 		'sass',
