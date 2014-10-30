@@ -11,10 +11,6 @@ npm
 ---
     npm install
 
-bower
------
-    bower install
-
 build
 -----
     grunt
