@@ -23,6 +23,10 @@ watch
 -----
     grunt watch
 
+CocProxy
+--------
+    npm run-script cocproxy
+
 direct link
 -----------
 

@@ -4,7 +4,8 @@
   "description": "Blue Monday @wiki",
   "main": "Gruntfile.js",
   "scripts": {
-    "postinstall": "bower install"
+    "postinstall": "bower install",
+    "cocproxy": "ruby cocproxy\\proxy.rb -c cocproxy\\proxy-config.yaml"
   },
   "author": "",
   "license": "MIT",
