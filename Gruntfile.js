@@ -7,6 +7,16 @@ module.exports = function (grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 
+		githooks: {
+			options: {
+				startMarker: '## GRUNT-GRUNTHOOKS START',
+				endMarker: '## GRUNT-GRUNTHOOKS END'
+			},
+			setup: {
+				'pre-commit': 'git-pre-commit'
+			}
+		},
+
 		requirejs: {
 			options: {
 				mainConfigFile: 'src/scripts/requirejs.config.js',
@@ -102,6 +112,10 @@ module.exports = function (grunt) {
 		'sass_imports',
 		'sass',
 		'copy:dist'
+	]);
+
+	grunt.registerTask('git-pre-commit', [
+		'build'
 	]);
 
 	grunt.registerTask('default', [
