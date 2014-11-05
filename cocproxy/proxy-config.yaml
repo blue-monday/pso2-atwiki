@@ -1,6 +1,5 @@
 server:
-   :FilterDir: dist
-   :Port: 5432
-   :Rules:
-      - "scripts/#{File.basename(req.path_info)}"
-      - "styles/#{File.basename(req.path_info)}"
+  :FilterDir: dist
+  :Port: 5432
+  :Rules:
+    - "#{req.path_info.split('/').last(2).join('/')}"
