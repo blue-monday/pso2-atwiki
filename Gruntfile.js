@@ -8,10 +8,6 @@ module.exports = function (grunt) {
 		pkg: grunt.file.readJSON('package.json'),
 
 		githooks: {
-			options: {
-				startMarker: '## GRUNT-GRUNTHOOKS START',
-				endMarker: '## GRUNT-GRUNTHOOKS END'
-			},
 			setup: {
 				'pre-commit': 'git-pre-commit'
 			}
@@ -21,7 +17,7 @@ module.exports = function (grunt) {
 			all: {
 				src: [
 					'.jshintrc',
-					'Gruntfile.js',
+					'*.js',
 					'src/**/*.js'
 				]
 			}
@@ -30,14 +26,12 @@ module.exports = function (grunt) {
 		requirejs: {
 			options: {
 				mainConfigFile: 'src/scripts/requirejs.config.js',
+				optimize: 'uglify2',
+				preserveLicenseComments: false,
+				generateSourceMaps: true,
 				name: 'main',
 				include: ['requirejs'],
 				out: 'dist/scripts/main.js'
-			},
-			dev: {
-				options: {
-					optimize: 'none'
-				}
 			},
 			dist: {
 			}
@@ -45,12 +39,12 @@ module.exports = function (grunt) {
 
 		watch: {
 			styles: {
-				files: 'src/styles/*.scss',
+				files: ['src/styles/*.scss'],
 				tasks: ['sass']
 			},
 			scripts: {
-				files: 'src/scripts/{,**/}*.js',
-				tasks: ['jshint', 'requirejs:dev']
+				files: ['*.js', 'src/**/*.js'],
+				tasks: ['jshint', 'requirejs']
 			}
 		},
 
@@ -119,7 +113,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('build', [
 		'jshint',
 		'clean',
-		'requirejs:dist',
+		'requirejs',
 		'sass_imports',
 		'sass',
 		'copy:dist'
