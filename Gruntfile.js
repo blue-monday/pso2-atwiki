@@ -120,7 +120,7 @@ module.exports = function (grunt) {
 	]);
 
 	grunt.registerTask('git-pre-commit', [
-		'build'
+		'jshint'
 	]);
 
 	grunt.registerTask('default', [
