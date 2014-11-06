@@ -1,5 +1,3 @@
-'use strict';
-
 (function() {
 	var jq = $.noConflict(true);
 

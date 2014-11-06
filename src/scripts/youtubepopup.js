@@ -31,7 +31,7 @@ define(['jquery', 'zeroclipboard', 'jquery-ui/draggable', 'jquery-ui/resizable',
 
 		if (_onYouTubePlayerReady)
 			_onYouTubePlayerReady.apply(this, arguments);
-	}
+	};
 
 	$(document)
 		.on('click', '.youtube-popup-link', onPopupLinkClick)
@@ -210,7 +210,7 @@ define(['jquery', 'zeroclipboard', 'jquery-ui/draggable', 'jquery-ui/resizable',
 		if (!t0 || !t1)
 			return;
 
-		var t = t1 - t0;
+		t = t1 - t0;
 		if (t < 0)
 			t = 0;
 

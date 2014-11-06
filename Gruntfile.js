@@ -1,6 +1,6 @@
-'use strict';
-
 module.exports = function (grunt) {
+	'use strict';
+
 	require('load-grunt-tasks')(grunt);
 	require('time-grunt')(grunt);
 
@@ -14,6 +14,16 @@ module.exports = function (grunt) {
 			},
 			setup: {
 				'pre-commit': 'git-pre-commit'
+			}
+		},
+
+		jshint: {
+			all: {
+				src: [
+					'.jshintrc',
+					'Gruntfile.js',
+					'src/**/*.js'
+				]
 			}
 		},
 
@@ -40,7 +50,7 @@ module.exports = function (grunt) {
 			},
 			scripts: {
 				files: 'src/scripts/{,**/}*.js',
-				tasks: ['requirejs:dev']
+				tasks: ['jshint', 'requirejs:dev']
 			}
 		},
 
@@ -107,6 +117,7 @@ module.exports = function (grunt) {
 	});
 
 	grunt.registerTask('build', [
+		'jshint',
 		'clean',
 		'requirejs:dist',
 		'sass_imports',
