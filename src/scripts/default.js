@@ -1,5 +1,10 @@
+var $ = require('jquery');
+require('sticky-kit');
+
+module.exports = function() {
+
 // bodyclass
-requirejs(['jquery'], function($) {
+(function() {
 	var currentPage = location.pathname.replace(/^\/[^/]+\/?/, '');
 	var add = $.proxy($('body'), 'addClass');
 
@@ -10,10 +15,10 @@ requirejs(['jquery'], function($) {
 
 	else
 		add('logged-out');
-});
+})();
 
 // hide js
-requirejs(['jquery'], function($) {
+(function() {
 	var timer = setInterval(function() {
 		var js = $('#menubar a[title*=".js "]');
 		if (!js.length)
@@ -26,10 +31,10 @@ requirejs(['jquery'], function($) {
 	setTimeout(function() {
 		clearInterval(timer);
 	}, 3000);
-});
+})();
 
 // bootstrap
-requirejs(['jquery'], function($) {
+(function() {
 	function init() {
 		$('input[type="submit"]:not(.btn)').addClass('btn btn-primary');
 		$('input[type="button"]:not(.btn), button:not(.btn)').addClass('btn btn-default');
@@ -37,12 +42,12 @@ requirejs(['jquery'], function($) {
 
 	$(function() {
 		init();
-		$(document).bind('DOMNodeInserted', init);
+		$(document).on('DOMNodeInserted', init);
 	});
-});
+})();
 
 // pagetop
-requirejs(['jquery'], function($) {
+(function() {
 	var shown = 0;
 
 	var styles = [
@@ -55,6 +60,7 @@ requirejs(['jquery'], function($) {
 		.appendTo('body');
 
 	var win = $(window);
+
 	win.scroll(function() {
 		var top = win.scrollTop();
 		var client = document.documentElement.clientHeight;
@@ -64,44 +70,41 @@ requirejs(['jquery'], function($) {
 		shown ^= 1;
 		link.stop().animate(styles[shown], 200);
 	});
+
 	win.scroll();
-});
+})();
 
 // sticky kit
-requirejs(['jquery', 'sticky-kit'], function($) {
-	$(function() {
-		$('.plugin_contents').stick_in_parent({
-			offset_top: 20
-		});
-		setTimeout(function() {
-			$('body').triggerHandler('sticky_kit:recalc');
-		}, 0);
+$(function() {
+	$('.plugin_contents').stick_in_parent({
+		offset_top: 20
 	});
+	setTimeout(function() {
+		$('body').triggerHandler('sticky_kit:recalc');
+	}, 0);
 });
 
 // content scroll
-requirejs(['jquery'], function($) {
-	$(function() {
-		$('.plugin_contents a').map(function() {
-			var $this = $(this);
+$(document).on('click', 'a[href^="#"]', function(event) {
+	event.preventDefault();
 
-			var href = $this.attr('href').split(/(?=#)/);
-			if (location.href.lastIndexOf(href[0], 0) === 0)
-				$this.attr('href', href[1]);
-		});
+	var href = $(this).attr('href');
+	var y = href === '#' || href === '#top' ? 0 : $(href).offset().top;
 
-		$(document).delegate('a[href^="#"]', 'click', function(event) {
-			event.preventDefault();
+	$('html, body').animate({scrollTop: y});
+});
 
-			var href = $(this).attr('href');
-			var y = href === '#' || href === '#top' ? 0 : $(href).offset().top;
+$(function() {
+	$('.plugin_contents a').map(function() {
+		var $this = $(this);
 
-			$('html, body').animate({scrollTop: y});
-		});
+		var href = $this.attr('href').split(/(?=#)/);
+		if (location.href.lastIndexOf(href[0], 0) === 0)
+			$this.attr('href', href[1]);
 	});
 });
 
 // the command
-requirejs(['the_command']);
+require('./the_command')();
 
-define({});
+};

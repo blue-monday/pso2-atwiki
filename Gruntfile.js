@@ -1,8 +1,45 @@
+var fs = require('fs');
+var glob = require('glob');
+var through = require('through');
+
 module.exports = function (grunt) {
 	'use strict';
 
 	require('load-grunt-tasks')(grunt);
 	require('time-grunt')(grunt);
+
+	function globalJQ(rules) {
+		return function(file) {
+			var filename = file.replace(/\\/g, '/');
+
+			var matched = rules.some(function(rule) {
+				if (rule instanceof RegExp && rule.test(filename) || typeof rule === 'string' && ~filename.indexOf(rule))
+					return true;
+			});
+
+			if (!matched)
+				return through();
+
+			var data = ';(function(__ojq__, __jq__) {\nwindow.jQuery = window.$ = __jq__;\n';
+			var stream = through(write, end);
+
+			function write(buf) {
+				data += buf;
+			}
+
+			function end() {
+				data += '\n;window.jQuery = window.$ = __ojq__;\n}).call(window, window.jQuery, require(\'jquery\'));';
+				stream.queue(data);
+				stream.queue(null);
+			}
+
+			return stream;
+		};
+	}
+
+	function getPluginScripts() {
+		return glob.sync('src/scripts/plugins/*.js');
+	}
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
@@ -26,17 +63,25 @@ module.exports = function (grunt) {
 			}
 		},
 
-		requirejs: {
-			options: {
-				mainConfigFile: 'src/scripts/requirejs.config.js',
-				optimize: 'uglify2',
-				preserveLicenseComments: false,
-				generateSourceMaps: true,
-				name: 'main',
-				include: ['requirejs'],
-				out: 'dist/scripts/main.js'
-			},
+		uglify: {
 			dist: {
+				options: {
+					sourceMap: true
+				},
+				files: {
+					'dist/scripts/main.js': ['dist/scripts/main.js']
+				}
+			}
+		},
+
+		browserify: {
+			dist: {
+				options: {
+					transform: [globalJQ(['jquery-ui', 'fotorama', 'sticky-kit']), 'deamdify', 'debowerify']
+				},
+				files: {
+					'dist/scripts/main.js': ['src/scripts/main.js']
+				}
 			}
 		},
 
@@ -47,7 +92,7 @@ module.exports = function (grunt) {
 			},
 			scripts: {
 				files: ['*.js', 'src/**/*.js'],
-				tasks: ['jshint', 'requirejs']
+				tasks: ['plugin-require', 'jshint', 'browserify']
 			}
 		},
 
@@ -113,10 +158,22 @@ module.exports = function (grunt) {
 		}
 	});
 
+	grunt.registerTask('plugin-require', function() {
+		var dir = 'src/scripts';
+		var files = glob.sync(dir + '/plugins/*.js');
+		var reqs = files.map(function(file) {
+			return 'require(\'' + file.replace(dir, '.') + '\')();';
+		});
+		var body = '// Auto generated. See grunt task.\nmodule.exports = function() {\n' + reqs.join('\n') + '\n};\n';
+		fs.writeFileSync(dir + '/all-plugins.js', body);
+	});
+
 	grunt.registerTask('build', [
 		'jshint',
 		'clean',
-		'requirejs',
+		'plugin-require',
+		'browserify',
+		'uglify',
 		'sass_imports',
 		'sass',
 		'copy:dist'

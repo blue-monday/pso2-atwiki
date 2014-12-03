@@ -1,5 +1,11 @@
-define(['jquery'], function($) {
-	$('#wikibody > table').each(function() {
+var $ = require('jquery');
+
+module.exports = function() {
+	$(function() {
+		$('#wikibody > table').each(eachTable);
+	});
+
+	function eachTable() {
 		var $this = $(this);
 		var totals = $this.find('td:last-child').map(function() {
 			return getSeconds($(this).text());
@@ -35,7 +41,7 @@ define(['jquery'], function($) {
 			row.appendTo(wrapper);
 		});
 		wrapper.insertAfter($this);
-	});
+	}
 
 	function getSeconds(ts) {
 		var t = ts.split(':');
@@ -46,4 +52,4 @@ define(['jquery'], function($) {
 		var s = +t[1];
 		return m * 60 + s;
 	}
-});
+};

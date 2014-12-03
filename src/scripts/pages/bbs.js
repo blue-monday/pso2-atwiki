@@ -1,5 +1,6 @@
-// tenko format button
-requirejs(['jquery'], function($) {
+var $ = require('jquery');
+
+module.exports = function() {
 	var colors = {
 		Hu: '#671313',
 		Fi: '#6c1f52',
@@ -17,14 +18,16 @@ requirejs(['jquery'], function($) {
 	};
 	var nameStyle = {display: 'inline-block', minWidth: '6em'};
 
-	$('.plugin_comment').each(function() {
-		if (!$(this).prev('ul').length)
-			return;
+	$(function() {
+		$('.plugin_comment').each(function() {
+			if (!$(this).prev('ul').length)
+				return;
 
-		$('<button type="button">整形</button>')
-			.addClass('btn btn-default')
-			.click(onClick)
-			.insertBefore(this);
+			$('<button type="button">整形</button>')
+				.addClass('btn btn-default')
+				.click(onClick)
+				.insertBefore(this);
+		});
 	});
 
 	function onClick() {
@@ -68,6 +71,4 @@ requirejs(['jquery'], function($) {
 
 		return str;
 	}
-});
-
-define({});
+};

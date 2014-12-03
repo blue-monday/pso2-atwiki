@@ -1,5 +1,3 @@
-requirejs(function() {
+module.exports = function() {
 	location.replace('../');
-});
-
-define({});
+};

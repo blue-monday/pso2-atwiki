@@ -1,4 +1,15 @@
-define(['jquery', 'zeroclipboard', 'jquery-ui/draggable', 'jquery-ui/resizable', 'jquery-ui/position'], function($, ZeroClipboard) {
+var $ = require('jquery');
+var ZeroClipboard = require('zeroclipboard');
+
+// deamdify does not work...
+require('jquery-ui/ui/core');
+require('jquery-ui/ui/widget');
+require('jquery-ui/ui/mouse');
+require('jquery-ui/ui/position');
+require('jquery-ui/ui/draggable');
+require('jquery-ui/ui/resizable');
+
+module.exports = function() {
 	ZeroClipboard.config({
 		moviePath: 'zeroclipboard.swf',
 		swfPath: 'zeroclipboard.swf',
@@ -10,17 +21,19 @@ define(['jquery', 'zeroclipboard', 'jquery-ui/draggable', 'jquery-ui/resizable',
 	var btn = $('<a/>')
 		.addClass('youtube-popup-link glyphicon glyphicon-film');
 
-	$('#wikibody a[href*="youtube.com"]').each(function(i) {
-		var $this = $(this);
-		var videoid = $this.attr('href').replace(/.+?\bv=|&.*/g, '');
-		var playerid = 'youtube-popup-' + i;
+	$(function() {
+		$('#wikibody a[href*="youtube.com"]').each(function(i) {
+			var $this = $(this);
+			var videoid = $this.attr('href').replace(/.+?\bv=|&.*/g, '');
+			var playerid = 'youtube-popup-' + i;
 
-		btn.clone()
-			.attr('href', 'https://www.youtube.com/v/' + videoid + '?rel=0&enablejsapi=1&playerapiid=' + playerid)
-			.attr('title', '「' + $this.text() + '」をここで再生')
-			.attr('data-playerid', playerid)
-			.attr('data-popup-title', $this.text())
-			.insertAfter($this);
+			btn.clone()
+				.attr('href', 'https://www.youtube.com/v/' + videoid + '?rel=0&enablejsapi=1&playerapiid=' + playerid)
+				.attr('title', '「' + $this.text() + '」をここで再生')
+				.attr('data-playerid', playerid)
+				.attr('data-popup-title', $this.text())
+				.insertAfter($this);
+		});
 	});
 
 	if (typeof onYouTubePlayerReady === 'function')
@@ -271,4 +284,4 @@ define(['jquery', 'zeroclipboard', 'jquery-ui/draggable', 'jquery-ui/resizable',
 		var s = t % 60;
 		return m + ':' + String(100 + s).substring(1);
 	}
-});
+};

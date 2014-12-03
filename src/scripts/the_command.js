@@ -1,4 +1,6 @@
-define(['jquery'], function() {
+var $ = require('jquery');
+
+module.exports = function() {
 	var completed = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
 	var inputs = Array(completed.length);
 
@@ -57,4 +59,4 @@ define(['jquery'], function() {
 			setTimeout(move, 1000 / 10);
 		}
 	}
-});
+};

@@ -1,24 +1,22 @@
-define(['jquery', 'plugin-utils'], function($, util) {
-	var defaults = {
-		width: 500,
-		height: 300
-	};
+var util = require('../plugin-utils');
+var $ = require('jquery');
 
-	$(function() {
-		$('.user-iframe').each(function() {
-			var $this = $(this);
+module.exports = function() {
+	util.registerPlugin({
+		name: 'user-iframe',
+		replace: true,
+		defaults: {
+			width: 500,
+			height: 300
+		},
+		callback: function(element, option) {
 			var iframe = $('<iframe/>')
-				.addClass($this.attr('class'))
-				.removeClass('user-iframe');
+				.addClass(element.attr('class'))
+				.removeClass(this.name);
 
-			var option = $.extend({}, defaults, util.parseOption($this));
 			$.each(option, $.proxy(iframe, 'attr'));
 
-			if ($this.hasClass('replace')) {
-				$this.replaceWith(iframe);
-			} else {
-				$this.empty().append(iframe);
-			}
-		});
+			return iframe;
+		}
 	});
-});
+};

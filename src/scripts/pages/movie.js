@@ -1,4 +1,4 @@
-requirejs(['timecolorbar']);
-requirejs(['youtubepopup']);
-
-define({});
+module.exports = function() {
+	require('../timecolorbar')();
+	require('../youtubepopup')();
+};

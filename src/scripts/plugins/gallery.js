@@ -1,10 +1,14 @@
-define(['jquery', 'sheetloader', 'plugin-utils', 'fotorama'], function($, loader, util) {
-	$(function() {
-		$('.gallery').each(function() {
-			var $this = $(this);
-			var option = util.parseOption($this, true);
+var util = require('../plugin-utils');
+var $ = require('jquery');
+var loader = require('../sheetloader');
+require('fotorama');
+
+module.exports = function() {
+	util.registerPlugin({
+		name: 'gallery',
+		callback: function(element, option) {
 			if (!option.key) {
-				$this
+				element
 					.text('エラー：key が指定されていません')
 					.addClass('error')
 					.removeClass('hidden');
@@ -12,16 +16,15 @@ define(['jquery', 'sheetloader', 'plugin-utils', 'fotorama'], function($, loader
 				return;
 			}
 
-			$this
-				.data('option', option)
+			element
 				.css({height: 0, opacity: 0})
 				.html('<div class="spinner"/>')
 				.removeClass('hidden');
 
 			var pad = (option.thumbheight || 64) + (option.thumbmargin || 2) * 2;
-			var height = Math.ceil($this.width() * 9 / 16 + pad);
+			var height = Math.ceil(element.width() * 9 / 16 + pad);
 
-			$this.animate({height: height, opacity: 1}, 200);
+			element.animate({height: height, opacity: 1}, 200);
 
 			loader(option.key)
 				.done(function(data) {
@@ -29,23 +32,21 @@ define(['jquery', 'sheetloader', 'plugin-utils', 'fotorama'], function($, loader
 						delete item.id;
 						delete item.html;
 					});
-					option.data = data;
 
-					$this
-						.bind('fotorama:ready', function(e) {
-							$this
-								.animate({height: $this.children().height(), opacity: 1}, 200, function() {
-									$this.css({height: ''});
-								});
+					element
+						.on('fotorama:ready', function() {
+							element.animate({height: $this.children().height(), opacity: 1}, 200, function() {
+								element.css({height: ''});
+							});
 						})
 						.fotorama(option);
 				})
 				.fail(function() {
-					$this
+					element
 						.text('エラー：スプレッドシートを読み込めません')
 						.addClass('error')
 						.removeClass('hidden');
 				});
-		});
+		}
 	});
-});
+};

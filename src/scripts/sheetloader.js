@@ -4,7 +4,7 @@ define(['jquery'], function($) {
 	$.sheetloader = function(key, callback) {
 		var url = 'http://www.corsproxy.com/spreadsheets.google.com/feeds/list/' + key + '/od6/public/values?alt=json&callback=?';
 
-		return $.getJSON(url).pipe(function(data) {
+		return $.getJSON(url).then(function(data) {
 			var rows = [];
 
 			$.each(data.feed.entry, function(i, entry) {
