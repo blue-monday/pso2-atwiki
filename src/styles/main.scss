@@ -25,7 +25,7 @@
 @import "googlefonts-Audiowide";
 
 html {
-	font: 75%/1.6 'Lucida Grande', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+	font: 75%/1.8 'Lucida Grande', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
 }
 
 body {
@@ -254,10 +254,11 @@ body {
 	position: fixed;
 	right: 20px;
 	bottom: 20px;
-	min-width: 100px;
-	line-height: 100px;
+	min-width: 80px;
+	line-height: 80px;
 	@include safe-rgba(background-color, 0, 0, 0, 0.8, #333);
 	@include safe-rgba(color, 255, 255, 255, 1, #fff);
+	font-size: 0.75em;
 	text-align: center;
 	text-decoration: none;
 	outline: none;

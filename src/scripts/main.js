@@ -1,5 +1,8 @@
-(function($) {
-	var currentPage = location.pathname.replace(/^\/[^/]+\/?/, '');
+(function() {
+	var $ = require('jquery');
+	var wiki = require('./atwiki-utils');
+
+	var currentPage = wiki.currentPage;
 
 	// main.js
 	if (currentPage === 'pages/45.html') {
@@ -7,24 +10,28 @@
 		return;
 	}
 
-	require('./default')();
-	require('./all-plugins')();
+	require('./default');
+	require('./all-plugins');
 
-	$.each([
-		// トップ
-		[['', 'pages/15.html'], require('./pages/top')],
+	var routes = [
+		[// トップ
+			['', 'pages/15.html'],
+			require('./pages/home')
+		],
 
-		// 緊急募集
-		[['pages/50.html'], require('./pages/bbs')],
+		[// 緊急募集
+			['pages/50.html'],
+			require('./pages/bbs')
+		],
 
-		// 動画倉庫
-		[['pages/21.html', 'pages/57.html', 'pages/71.html'], require('./pages/movie')],
+		[// 動画倉庫
+			['pages/21.html', 'pages/57.html', 'pages/71.html'],
+			require('./pages/movie')
+		],
+	];
 
-	], function(i, rule) {
-		if (~$.inArray(currentPage, rule[0])) {
+	$.each(routes, function(i, rule) {
+		if (~$.inArray(currentPage, rule[0]))
 			rule[1]();
-			return true;
-		}
 	});
-
-})(require('jquery'));
+})();

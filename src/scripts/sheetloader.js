@@ -1,29 +1,29 @@
-define(['jquery'], function($) {
-	var gsx = /^gsx\$/;
+var $ = require('jquery');
+var gsx = /^gsx\$/;
 
-	$.sheetloader = function(key, callback) {
-		var url = 'http://www.corsproxy.com/spreadsheets.google.com/feeds/list/' + key + '/od6/public/values?alt=json&callback=?';
+module.exports = load;
+load.load = load;
 
-		return $.getJSON(url).then(function(data) {
-			var rows = [];
+function load(key, callback) {
+	var url = 'http://www.corsproxy.com/spreadsheets.google.com/feeds/list/' + key + '/od6/public/values?alt=json&callback=?';
 
-			$.each(data.feed.entry, function(i, entry) {
-				var item = {};
-				$.each(entry, function(key, value) {
-					if (!gsx.test(key))
-						return;
+	return $.getJSON(url).then(function(data) {
+		var rows = [];
 
-					item[key.replace(gsx, '')] = value.$t;
-				});
-				rows.push(item);
+		$.each(data.feed.entry, function(i, entry) {
+			var item = {};
+			$.each(entry, function(key, value) {
+				if (!gsx.test(key))
+					return;
+
+				item[key.replace(gsx, '')] = value.$t;
 			});
-
-			if (typeof callback === 'function')
-				callback(rows);
-
-			return rows;
+			rows.push(item);
 		});
-	};
 
-	return $.sheetloader;
-});
+		if (typeof callback === 'function')
+			callback(rows);
+
+		return rows;
+	});
+}

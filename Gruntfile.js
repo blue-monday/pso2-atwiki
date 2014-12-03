@@ -77,7 +77,7 @@ module.exports = function (grunt) {
 		browserify: {
 			dist: {
 				options: {
-					transform: [globalJQ(['jquery-ui', 'fotorama', 'sticky-kit']), 'deamdify', 'debowerify']
+					transform: [globalJQ(['jquery-ui', 'fotorama', 'sticky-kit']), 'debowerify']
 				},
 				files: {
 					'dist/scripts/main.js': ['src/scripts/main.js']
@@ -91,7 +91,11 @@ module.exports = function (grunt) {
 				tasks: ['sass']
 			},
 			scripts: {
-				files: ['*.js', 'src/**/*.js'],
+				files: ['*.js', 'src/scripts/{pages/,}*.js', '!src/scripts/all-plugins.js'],
+				tasks: ['jshint', 'browserify']
+			},
+			plugins: {
+				files: ['src/scripts/plugins/*.js'],
 				tasks: ['plugin-require', 'jshint', 'browserify']
 			}
 		},
@@ -162,10 +166,12 @@ module.exports = function (grunt) {
 		var dir = 'src/scripts';
 		var files = glob.sync(dir + '/plugins/*.js');
 		var reqs = files.map(function(file) {
-			return 'require(\'' + file.replace(dir, '.') + '\')();';
+			return 'require(\'' + file.replace(dir, '.') + '\');';
 		});
-		var body = '// Auto generated. See grunt task.\nmodule.exports = function() {\n' + reqs.join('\n') + '\n};\n';
+		var body = '// Auto generated. See grunt task.\n' + reqs.join('\n') + '\n';
 		fs.writeFileSync(dir + '/all-plugins.js', body);
+
+		console.log('Done.');
 	});
 
 	grunt.registerTask('build', [
