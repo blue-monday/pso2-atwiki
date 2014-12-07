@@ -37,10 +37,6 @@ module.exports = function (grunt) {
 		};
 	}
 
-	function getPluginScripts() {
-		return glob.sync('src/scripts/plugins/*.js');
-	}
-
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 
@@ -77,7 +73,7 @@ module.exports = function (grunt) {
 		browserify: {
 			dist: {
 				options: {
-					transform: [globalJQ(['jquery-ui', 'fotorama', 'sticky-kit']), 'debowerify']
+					transform: [globalJQ(['jquery-ui', 'fotorama', 'sticky-kit']), 'browserify-shim', 'debowerify']
 				},
 				files: {
 					'dist/scripts/main.js': ['src/scripts/main.js']

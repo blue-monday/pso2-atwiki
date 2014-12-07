@@ -9,7 +9,6 @@ function Plugin(option) {
 
 Plugin.prototype.run = function run(root, force) {
 	var self = this;
-	var callback = this.option.callback;
 	var selector = '.' + this.name;
 
 	if (!force)
@@ -17,11 +16,30 @@ Plugin.prototype.run = function run(root, force) {
 
 	$(root || document).find(selector).each(function() {
 		var $this = $(this);
-		var option = $.extend({}, self.option.defaults, parseOption($this));
+		var option;
+
+		function except(e) {
+			$this.addClass('error').text(e);
+		}
+
+		try {
+			option = parseOption($this, self.option.transform);
+		} catch (e) {
+			except(e);
+			return;
+		}
 
 		$this.empty();
+		option = $.extend({}, self.option.defaults, option);
 
-		var result = callback.call(self, $this, option);
+		var result;
+
+		try {
+			result = self.option.callback.call(self, $this, option);
+		} catch (e) {
+			except(e);
+			return;
+		}
 
 		if (result) {
 			if (option.replace)
@@ -35,7 +53,7 @@ Plugin.prototype.run = function run(root, force) {
 	});
 };
 
-function parseOption(element) {
+function parseOption(element, transform) {
 	var options = {};
 	var reg = /([\w$_-]+)[:：][ 　]*("(?:\\"|[^"])*"|.*[^\s　]|)/;
 
@@ -67,10 +85,19 @@ function parseOption(element) {
 		else if (/^"(?:\\.|[^"])*"$/.test(value))
 			value = value.slice(1, -1).replace(/\\(.)/g, '$1');
 
+		if (typeof transform === 'function')
+			value = transform(key, value, options);
+
 		options[key] = value;
 	});
 
 	return options;
+}
+
+function registerPlugin(option) {
+	var plugin = new Plugin(option);
+	pluginCache.push(plugin);
+	return plugin;
 }
 
 function runAll(root, force) {
@@ -80,13 +107,7 @@ function runAll(root, force) {
 }
 
 module.exports.parseOption = parseOption;
-
-module.exports.registerPlugin = function registerPlugin(option) {
-	var plugin = new Plugin(option);
-	pluginCache.push(plugin);
-	return plugin;
-};
-
+module.exports.registerPlugin = registerPlugin;
 module.exports.runAll = runAll;
 
 $(function() {

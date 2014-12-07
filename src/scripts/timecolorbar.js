@@ -31,7 +31,7 @@ function eachTable() {
 	$('<div/>')
 		.addClass('colorbar-cell cell-0')
 		.width((175 / longer * 1000 | 0) / 10 + '%')
-		.attr('title', '5周安全圏 (3:00)')
+		.attr('title', '5周安全圏 (2:55)')
 		.appendTo(wrapper)
 		.wrap('<div class="colorbar-row"/>');
 

@@ -3,24 +3,17 @@ var $ = require('jquery');
 var loader = require('../sheetloader');
 
 window.blockFotoramaData = true;
-require('fotorama/fotorama.dev');
+require('fotorama');
 
 util.registerPlugin({
 	name: 'gallery',
 	callback: function(element, option) {
-		if (!option.key) {
-			element
-				.text('エラー：key が指定されていません')
-				.addClass('error')
-				.removeClass('hidden');
+		element.removeClass('hidden');
 
-			return;
-		}
+		if (!option.key)
+			throw new Error('エラー：key が指定されていません');
 
-		element
-			.css({height: 0, opacity: 0})
-			.html('<div class="spinner"/>')
-			.removeClass('hidden');
+		element.css({height: 0, opacity: 0}).html('<div class="spinner"/>');
 
 		var pad = (option.thumbheight || 64) + (option.thumbmargin || 2) * 2;
 		var height = Math.ceil(element.width() * 9 / 16 + pad);
@@ -47,8 +40,7 @@ util.registerPlugin({
 			.fail(function() {
 				element
 					.text('エラー：スプレッドシートを読み込めません')
-					.addClass('error')
-					.removeClass('hidden');
+					.addClass('error');
 			});
 	}
 });
