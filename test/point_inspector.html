@@ -3,16 +3,8 @@
 <head>
 <meta charset="utf-8">
 <title></title>
-<style>
-* {
-	box-sizing: border-box;
-}
-textarea {
-	width: 100%;
-	height: 100px;
-}
-</style>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script>
 $(function($) {
 	var fileInput = $('#file');
@@ -54,9 +46,23 @@ $(function($) {
 </script>
 </head>
 <body>
-<div><input type="file" id="file"></div>
-<div><img id="img"></div>
-<div><textarea id="text"></textarea></div>
-<div><button type="button" id="reset">消去</button></div>
+	<div class="container">
+		<div class="page-header"><h1>画像の座標を調べるやつ</h1></div>
+		<div class="form-group">
+			<label>1. 画像を選択</label>
+			<input type="file" id="file">
+		</div>
+		<div class="form-group">
+			<label>2. 調べたい場所をクリック</label>
+			<div class="form-control-static">
+				<img id="img">
+			</div>
+		</div>
+		<div class="form-group">
+			<label>3. 座標をコピー</label>
+			<textarea class="form-control" id="text"></textarea>
+		</div>
+		<button type="button" class="btn btn-default" id="reset">消去</button>
+	</div>
 </body>
 </html>
