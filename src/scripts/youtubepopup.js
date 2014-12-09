@@ -1,5 +1,6 @@
 var $ = require('jquery');
 var ZeroClipboard = require('zeroclipboard');
+var toastr = require('toastr');
 
 // deamdify does not work...
 require('jquery-ui/ui/core');
@@ -180,6 +181,10 @@ module.exports = function() {
 			var val = format.val();
 			if (val)
 				this.setText(val + '\n');
+		});
+
+		zclip.on('aftercopy', function() {
+			toastr.success('コピーしました');
 		});
 
 		popup.append(titlebar, content, timerecorder);
