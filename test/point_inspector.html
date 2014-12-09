@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<style>
+* {
+	box-sizing: border-box;
+}
+textarea {
+	width: 100%;
+	height: 100px;
+}
+</style>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+$(function($) {
+	var fileInput = $('#file');
+	var img = $('#img');
+	var text = $('#text');
+	var reset = $('#reset');
+
+	fileInput.change(function() {
+		var file = this.files[0];
+		if (!file)
+			return;
+
+		var reader = new FileReader();
+		reader.onload = onImageLoad;
+		reader.readAsDataURL(this.files[0]);
+	});
+
+	img.click(function(event) {
+		if (event.button)
+			return;
+
+		var offset = $(this).offset();
+		var x = event.pageX - offset.left;
+		var y = event.pageY - offset.top;
+
+		text[0].value += '(' + x + ',' + y + ')';
+	});
+
+	reset.click(clear);
+
+	function onImageLoad() {
+		img.attr('src', this.result);
+		clear();
+	}
+	function clear() {
+		text.val('');
+	}
+});
+</script>
+</head>
+<body>
+<div><input type="file" id="file"></div>
+<div><img id="img"></div>
+<div><textarea id="text"></textarea></div>
+<div><button type="button" id="reset">消去</button></div>
+</body>
+</html>
