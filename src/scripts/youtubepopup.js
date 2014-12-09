@@ -202,7 +202,14 @@ module.exports = function() {
 				stack: '.youtube-popup',
 				handle: '.youtube-popup-titlebar',
 				cancel: '.youtube-popup-titlebar-buttons',
-				iframeFix: true
+				iframeFix: true,
+				start: function() {
+					// jQuery UI 1.11.2 changes (#7772) set an annoying css height.
+					// Remove it to keep auto.
+					setTimeout(function() {
+						popup.css({height: ''});
+					}, 0);
+				}
 			})
 			.animate({width: 640}, 200);
 
