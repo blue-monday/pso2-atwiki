@@ -112,7 +112,8 @@ module.exports = function (grunt) {
 				files: {
 					'src/styles/_imports.scss': [
 						'bower_components/jquery-ui/themes/base/{core,draggable,resizable}.css',
-						'bower_components/fotorama/fotorama.css'
+						'bower_components/fotorama/fotorama.css',
+						'bower_components/toastr/toastr.css'
 					]
 				}
 			}

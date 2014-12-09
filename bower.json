@@ -19,6 +19,7 @@
     "jquery-ui": "~1.11.2",
     "oppai.js": "https://github.com/dameleon/oppai.js.git",
     "sticky-kit": "~1.0.4",
+    "toastr": "~2.1.0",
     "zeroclipboard": "~2.1.6"
   },
   "devDependencies": {}

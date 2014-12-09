@@ -10,6 +10,9 @@
 		return;
 	}
 
+	var toastr = require('toastr');
+	toastr.options.timeOut = 2000;
+
 	require('./default');
 	require('./all-plugins');
 
