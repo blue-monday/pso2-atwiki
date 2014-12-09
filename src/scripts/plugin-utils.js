@@ -1,6 +1,14 @@
 var $ = require('jquery');
 
-var pluginCache = [];
+var selectors = {
+	option: '> div:first-child:not([class])'
+};
+var plugins = [];
+
+module.exports.plugins = plugins;
+module.exports.parseOption = parseOption;
+module.exports.registerPlugin = registerPlugin;
+module.exports.runAll = runAll;
 
 function Plugin(option) {
 	this.option = option;
@@ -16,21 +24,26 @@ Plugin.prototype.run = function run(root, force) {
 
 	$(root || document).find(selector).each(function() {
 		var $this = $(this);
-		var option;
 
 		function except(e) {
 			$this.addClass('error').text(e);
 		}
 
-		try {
-			option = parseOption($this, self.option.transform);
-		} catch (e) {
-			except(e);
-			return;
-		}
+		var option = {};
 
-		$this.empty();
-		option = $.extend({}, self.option.defaults, option);
+		if (!self.option.noOption) {
+			try {
+				option = parseOption($this, self.option.transform);
+			} catch (e) {
+				except(e);
+				return;
+			}
+
+			option = $.extend({}, self.option.defaults, option);
+
+			if (hasProperty(option))
+				$this.find(selectors.option).remove();
+		}
 
 		var result;
 
@@ -42,7 +55,7 @@ Plugin.prototype.run = function run(root, force) {
 		}
 
 		if (result) {
-			if (option.replace)
+			if (self.option.replace)
 				$this.replaceWith(result);
 
 			else
@@ -53,16 +66,21 @@ Plugin.prototype.run = function run(root, force) {
 	});
 };
 
+function hasProperty(obj) {
+	for (var p in obj)
+		return true;
+
+	return false;
+}
+
 function parseOption(element, transform) {
 	var options = {};
 	var reg = /([\w$_-]+)[:：][ 　]*("(?:\\"|[^"])*"|.*[^\s　]|)/;
 
-	// atwiki structure
-	element.children('div').contents().each(function(i, node) {
-		if (node.nodeType !== 3)
-			return;
+	var lines = element.find(selectors.option).text().split('\n');
 
-		var kv = reg.exec(node.data);
+	$.each(lines, function(i, line) {
+		var kv = reg.exec(line);
 
 		if (!kv)
 			return;
@@ -96,20 +114,17 @@ function parseOption(element, transform) {
 
 function registerPlugin(option) {
 	var plugin = new Plugin(option);
-	pluginCache.push(plugin);
+	plugins.push(plugin);
+
+	$(function() {
+		plugin.run();
+	});
+
 	return plugin;
 }
 
 function runAll(root, force) {
-	pluginCache.forEach(function(plugin) {
+	plugins.forEach(function(plugin) {
 		plugin.run(root, force);
 	});
 }
-
-module.exports.parseOption = parseOption;
-module.exports.registerPlugin = registerPlugin;
-module.exports.runAll = runAll;
-
-$(function() {
-	runAll();
-});
