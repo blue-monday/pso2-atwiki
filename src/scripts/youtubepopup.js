@@ -11,15 +11,12 @@ require('jquery-ui/ui/resizable');
 
 module.exports = function() {
 	ZeroClipboard.config({
-		moviePath: 'zeroclipboard.swf',
-		swfPath: 'zeroclipboard.swf',
 		title: 'クリップボードにコピー',
 		forceHandCursor: true,
 		debug: false
 	});
 
-	var btn = $('<a/>')
-		.addClass('youtube-popup-link glyphicon glyphicon-film');
+	var btn = $('<a/>').addClass('youtube-popup-link glyphicon glyphicon-film');
 
 	$(function() {
 		$('#wikibody a[href*="youtube.com"]').each(function(i) {
@@ -55,8 +52,6 @@ module.exports = function() {
 		.on('click', '.youtube-popup-titlebar-buttons .btn-timerecorder', toggleTimerecorder)
 		.on('click', '.youtube-popup-titlebar-buttons .btn-openprev', openNextPrev)
 		.on('click', '.youtube-popup-titlebar-buttons .btn-opennext', openNextPrev)
-		.on('click', '.youtube-popup-titlebar-buttons .btn-smallerpopup', smallerPopup)
-		.on('click', '.youtube-popup-titlebar-buttons .btn-biggerpopup', biggerPopup)
 		.on('click', '.youtube-popup-titlebar-buttons .btn-closepopup', closePopup)
 		.on('click', '.youtube-popup-timerecorder td.link', onRecordButtonClick)
 		.on('focus click', '.youtube-popup-timerecorder .format', function() {
@@ -101,10 +96,10 @@ module.exports = function() {
 			anchorElement: $this
 		});
 	}
+
 	function openPopup(option) {
 		var popup = $('<div/>')
-			.addClass('youtube-popup')
-			.attr('data-video-size', '3');
+			.addClass('youtube-popup');
 
 		var titlebar = $('<div/>')
 			.addClass('youtube-popup-titlebar')
@@ -141,11 +136,14 @@ module.exports = function() {
 			.addClass('youtube-popup-timerecorder-footer');
 
 		var table = $('<table/>');
-		var thead = $('<thead><tr><th></th><th>wave1</th><th>wave2</th><th>wave3</th><th>wave4</th><th>wave5</th><th>wave6</th></tr></thead>').appendTo(table);
-		var tbody = $('<tbody/>').appendTo(table);
-		var tr1 = $('<tr><th>開始時刻</th></tr>').appendTo(tbody);
-		var tr2 = $('<tr><th>終了時刻</th></tr>').appendTo(tbody);
-		var tr3 = $('<tr><th>所要時間</th></tr>').appendTo(tbody);
+		var thead = $('<thead><tr><th></th><th>wave1</th><th>wave2</th><th>wave3</th><th>wave4</th><th>wave5</th><th>wave6</th></tr></thead>');
+		var tbody = $('<tbody/>');
+		var tr1 = $('<tr><th>開始時刻</th></tr>');
+		var tr2 = $('<tr><th>終了時刻</th></tr>');
+		var tr3 = $('<tr><th>所要時間</th></tr>');
+
+		table.append(thead, tbody);
+		tbody.append(tr1, tr2, tr3);
 
 		for (var i = 1; i <= 6; i++) {
 			$('<td/>')
@@ -173,18 +171,20 @@ module.exports = function() {
 			.appendTo(trfooter);
 
 		var zclip = new ZeroClipboard(clip);
-		zclip.on('load', function() {
+
+		zclip.on('ready', function() {
 			clip.addClass('ready');
 		});
-		zclip.on('dataRequested', function() {
+
+		zclip.on('copy', function() {
 			var val = format.val();
 			if (val)
-				zclip.setText(val + '\n');
+				this.setText(val + '\n');
 		});
 
-		buttons.append(toggletr, prev, next, close);
-		titlebar.append(buttons);
 		popup.append(titlebar, content, timerecorder);
+		titlebar.append(buttons);
+		buttons.append(toggletr, prev, next, close);
 
 		popup
 			.appendTo(document.body)
@@ -208,6 +208,7 @@ module.exports = function() {
 
 		return popup;
 	}
+
 	function onRecordButtonClick() {
 		var $this = $(this);
 		var popup = $this.closest('.youtube-popup');
@@ -242,6 +243,7 @@ module.exports = function() {
 		text += secondsToTime(totalSeconds) + '|';
 		timerecorder.find('.format').val(text);
 	}
+
 	function toggleTimerecorder() {
 		var popup = $(this);
 		if (!popup.is('.youtube-popup'))
@@ -250,6 +252,7 @@ module.exports = function() {
 		if (popup.length)
 			popup.find('.youtube-popup-timerecorder').slideToggle(200);
 	}
+
 	function openNextPrev() {
 		var $this = $(this);
 		var diff = $this.hasClass('btn-opennext') ? 1 : -1;
@@ -264,24 +267,15 @@ module.exports = function() {
 		$('#' + nextPlayerid).closest('.youtube-popup').offset(popup.offset());
 		popup.remove();
 	}
-	function smallerPopup() {
-		var popup = $(this).closest('.youtube-popup');
-		var size = +popup.attr('data-video-size');
-		if (1 < size)
-			popup.attr('data-video-size', size - 1);
-	}
-	function biggerPopup() {
-		var popup = $(this).closest('.youtube-popup');
-		var size = +popup.attr('data-video-size');
-		if (size < 6)
-			popup.attr('data-video-size', size + 1);
-	}
+
 	function closePopup() {
 		$(this).closest('.youtube-popup').remove();
 	}
+
 	function secondsToTime(t) {
 		var m = t / 60 | 0;
 		var s = t % 60;
+
 		return m + ':' + String(100 + s).substring(1);
 	}
 };
