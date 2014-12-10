@@ -39,7 +39,15 @@ util.registerPlugin({
 		var oppai = new Oppai(canvas[0], option.image_url, {enableTouch: true}, left, right);
 		oppai.load();
 
-		canvas.data('oppai', oppai);
+		var last = 0;
+		$(window).scroll(function() {
+			var now = +new Date();
+			if (now < last + 400)
+				return;
+
+			canvas.click();
+			last = now;
+		});
 
 		return canvas;
 	}
