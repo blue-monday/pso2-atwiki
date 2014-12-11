@@ -39,14 +39,19 @@ util.registerPlugin({
 		var oppai = new Oppai(canvas[0], option.image_url, {enableTouch: true}, left, right);
 		oppai.load();
 
-		var last = 0;
-		$(window).scroll(function() {
-			var now = +new Date();
-			if (now < last + 400)
-				return;
+		var lastPos = 0;
+		var $window = $(window);
+		$window.scroll(function() {
+			var pos = $window.scrollTop();
+			var randX = Math.random() * 5;
 
-			canvas.click();
-			last = now;
+			if (pos < lastPos)
+				oppai.swing(randX, 80, 3000);
+
+			else
+				oppai.swing(randX, -80, 3000);
+
+			lastPos = pos;
 		});
 
 		return canvas;
