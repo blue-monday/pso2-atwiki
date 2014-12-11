@@ -1,7 +1,7 @@
 Blue Monday @PSO2 Ship 4
 ========================
 
-[Blue Monday ＠wiki](http://www61.atwiki.jp/bluemonday_ship04/)
+[Blue Monday @wiki](http://www61.atwiki.jp/bluemonday_ship04/)
 
 clone
 -----
