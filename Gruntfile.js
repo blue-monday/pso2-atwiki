@@ -2,7 +2,7 @@ var fs = require('fs');
 var glob = require('glob');
 var through = require('through');
 
-module.exports = function (grunt) {
+module.exports = function(grunt) {
 	'use strict';
 
 	require('load-grunt-tasks')(grunt);
@@ -20,9 +20,6 @@ module.exports = function (grunt) {
 			if (!matched)
 				return through();
 
-			var data = ';(function(__ojq__, __jq__) {\nwindow.jQuery = window.$ = __jq__;\n';
-			var stream = through(write, end);
-
 			function write(buf) {
 				data += buf;
 			}
@@ -32,6 +29,9 @@ module.exports = function (grunt) {
 				stream.queue(data);
 				stream.queue(null);
 			}
+
+			var stream = through(write, end);
+			var data = ';(function(__ojq__, __jq__) {\nwindow.jQuery = window.$ = __jq__;\n';
 
 			return stream;
 		};
@@ -104,7 +104,7 @@ module.exports = function (grunt) {
 			}
 		},
 
-		sass_imports: {
+		'sass_imports': {
 			options: {
 				banner: ''
 			},
