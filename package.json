@@ -5,7 +5,8 @@
   "main": "Gruntfile.js",
   "scripts": {
     "postinstall": "bower install && grunt githooks",
-    "cocproxy": "ruby cocproxy\\proxy.rb -c cocproxy\\proxy-config.yaml"
+    "cocproxy": "ruby cocproxy\\proxy.rb -c cocproxy\\proxy-config.yaml",
+    "nproxy": "node nproxy\\nproxy.js"
   },
   "author": "",
   "license": "MIT",
@@ -33,6 +34,7 @@
     "grunt-scss-imports": "^0.0.2",
     "jshint-stylish": "^1.0.0",
     "load-grunt-tasks": "^0.6.0",
+    "nproxy": "^1.4.4",
     "through": "^2.3.6",
     "time-grunt": "^0.4.0"
   },
