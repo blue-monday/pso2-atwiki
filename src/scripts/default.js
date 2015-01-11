@@ -1,3 +1,5 @@
+'use strict';
+
 var $ = require('jquery');
 require('sticky-kit');
 
@@ -5,164 +7,164 @@ var wiki = require('./atwiki-utils');
 
 // bodyclass
 (function() {
-	var currentPage = wiki.currentPage;
-	var add = $.proxy($('body'), 'addClass');
+  var currentPage = wiki.currentPage;
+  var add = $.proxy($('body'), 'addClass');
 
-	add(currentPage.replace(/\.html$/, '').replace(/\W/g, '-') || 'toppage');
+  add(currentPage.replace(/\.html$/, '').replace(/\W/g, '-') || 'toppage');
 
-	if (wiki.isLoggedIn)
-		add('logged-in');
+  if (wiki.isLoggedIn)
+    add('logged-in');
 
-	else
-		add('logged-out');
+  else
+    add('logged-out');
 })();
 
 // hide js
 (function() {
-	var timer = setInterval(function() {
-		var js = $('#menubar a[title*=".js "]');
-		if (!js.length)
-			return;
+  var timer = setInterval(function() {
+    var js = $('#menubar a[title*=".js "]');
+    if (!js.length)
+      return;
 
-		js.closest('li').remove();
-		clearInterval(timer);
-	}, 100);
+    js.closest('li').remove();
+    clearInterval(timer);
+  }, 100);
 
-	setTimeout(function() {
-		clearInterval(timer);
-	}, 3000);
+  setTimeout(function() {
+    clearInterval(timer);
+  }, 3000);
 })();
 
 // bootstrap
 (function() {
-	function init() {
-		$('input[type="submit"]:not(.btn)').addClass('btn btn-primary');
-		$('input[type="button"]:not(.btn), button:not(.btn)').addClass('btn btn-default');
-	}
+  function init() {
+    $('input[type="submit"]:not(.btn)').addClass('btn btn-primary');
+    $('input[type="button"]:not(.btn), button:not(.btn)').addClass('btn btn-default');
+  }
 
-	$(function() {
-		init();
-		$(document).on('DOMNodeInserted', init);
-	});
+  $(function() {
+    init();
+    $(document).on('DOMNodeInserted', init);
+  });
 })();
 
 // pagetop
 (function() {
-	var shown = 0;
+  var shown = 0;
 
-	var styles = [
-		{bottom: '-120px', opacity: 0},
-		{bottom: '20px', opacity: 1}
-	];
+  var styles = [
+    {bottom: '-120px', opacity: 0},
+    {bottom: '20px', opacity: 1}
+  ];
 
-	var link = $('<a href="#" id="pagetop">PAGE TOP</a>')
-		.css(styles[shown])
-		.appendTo('body');
+  var link = $('<a href="#" id="pagetop">PAGE TOP</a>')
+    .css(styles[shown])
+    .appendTo('body');
 
-	var win = $(window);
+  var win = $(window);
 
-	win.scroll(function() {
-		var top = win.scrollTop();
-		var client = document.documentElement.clientHeight;
-		if (shown && client <= top || !shown && top < client)
-			return;
+  win.scroll(function() {
+    var top = win.scrollTop();
+    var client = document.documentElement.clientHeight;
+    if (shown && client <= top || !shown && top < client)
+      return;
 
-		shown ^= 1;
-		link.stop().animate(styles[shown], 200);
-	});
+    shown ^= 1;
+    link.stop().animate(styles[shown], 200);
+  });
 
-	win.scroll();
+  win.scroll();
 })();
 
 // sticky kit
 $(function() {
-	$('.plugin_contents').stick_in_parent({
-		offset_top: 20
-	});
+  $('.plugin_contents').stick_in_parent({
+    'offset_top': 20
+  });
 
-	setTimeout(function() {
-		$('body').triggerHandler('sticky_kit:recalc');
-	}, 0);
+  setTimeout(function() {
+    $('body').triggerHandler('sticky_kit:recalc');
+  }, 0);
 });
 
 // content scroll
 $(document).on('click', 'a[href^="#"]', function(event) {
-	event.preventDefault();
+  event.preventDefault();
 
-	var href = $(this).attr('href');
-	var y = href === '#' || href === '#top' ? 0 : $(href).offset().top;
+  var href = $(this).attr('href');
+  var y = href === '#' || href === '#top' ? 0 : $(href).offset().top;
 
-	$('html, body').animate({scrollTop: y});
+  $('html, body').animate({scrollTop: y});
 });
 
 $(function() {
-	$('.plugin_contents a').map(function() {
-		var $this = $(this);
+  $('.plugin_contents a').map(function() {
+    var $this = $(this);
 
-		var href = $this.attr('href').split(/(?=#)/);
-		if (location.href.lastIndexOf(href[0], 0) === 0)
-			$this.attr('href', href[1]);
-	});
+    var href = $this.attr('href').split(/(?=#)/);
+    if (location.href.lastIndexOf(href[0], 0) === 0)
+      $this.attr('href', href[1]);
+  });
 });
 
 // the command
 (function() {
-	var completed = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
-	var inputs = Array(completed.length);
+  var completed = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
+  var inputs = new Array(completed.length);
 
-	$(document).keydown(function(event) {
-		var key = event.which;
-		if (!key)
-			return;
+  $(document).keydown(function(event) {
+    var key = event.which;
+    if (!key)
+      return;
 
-		inputs.push(key);
-		inputs.shift();
+    inputs.push(key);
+    inputs.shift();
 
-		if (inputs.join(',') === completed.join(','))
-			setTimeout(fire, 1000);
-	});
+    if (inputs.join(',') === completed.join(','))
+      setTimeout(fire, 1000);
+  });
 
-	function fire() {
-		if (fire.busy)
-			return;
+  function fire() {
+    if (fire.busy)
+      return;
 
-		fire.busy = true;
+    fire.busy = true;
 
-		var body = $('body');
-		body.css({
-			overflowX: 'hidden',
-			WebkitFilter: 'invert(100%)'
-		});
+    var body = $('body');
+    body.css({
+      overflowX: 'hidden',
+      WebkitFilter: 'invert(100%)'
+    });
 
-		var dulation = 10000;
-		var hidding = true;
+    var dulation = 10000;
+    var hidding = true;
 
-		move();
+    function move() {
+      if (!hidding)
+        return;
 
-		body.animate({opacity: '0'}, dulation, function() {
-			body.css({
-				left: '',
-				top: '',
-				WebkitFilter: ''
-			});
-			hidding = false;
-		});
-		body.delay(dulation / 2);
-		body.animate({opacity: '1'}, 500, function() {
-			body.css({overflow: ''});
-			fire.busy = false;
-		});
+      body.css({
+        left: Math.random() * 100 - 50 + 'px',
+        top: Math.random() * 100 - 50 + 'px'
+      });
 
-		function move() {
-			if (!hidding)
-				return;
+      setTimeout(move, 1000 / 10);
+    }
 
-			body.css({
-				left: Math.random() * 100 - 50 + 'px',
-				top: Math.random() * 100 - 50 + 'px'
-			});
+    move();
 
-			setTimeout(move, 1000 / 10);
-		}
-	}
+    body.animate({opacity: '0'}, dulation, function() {
+      body.css({
+        left: '',
+        top: '',
+        WebkitFilter: ''
+      });
+      hidding = false;
+    });
+    body.delay(dulation / 2);
+    body.animate({opacity: '1'}, 500, function() {
+      body.css({overflow: ''});
+      fire.busy = false;
+    });
+  }
 })();

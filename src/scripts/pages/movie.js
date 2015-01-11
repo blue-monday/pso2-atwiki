@@ -1,4 +1,6 @@
+'use strict';
+
 module.exports = function() {
-	require('../timecolorbar')();
-	require('../youtubepopup')();
+  require('../timecolorbar')();
+  require('../youtubepopup')();
 };
