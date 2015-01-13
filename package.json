@@ -5,8 +5,8 @@
   "main": "Gruntfile.js",
   "scripts": {
     "postinstall": "bower install && grunt githooks",
-    "cocproxy": "ruby cocproxy\\proxy.rb -c cocproxy\\proxy-config.yaml",
-    "nproxy": "node nproxy\\nproxy.js"
+    "cocproxy": "ruby cocproxy/proxy.rb -c cocproxy/proxy-config.yaml",
+    "nproxy": "node nproxy/nproxy.js"
   },
   "author": "",
   "license": "MIT",
