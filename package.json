@@ -1,20 +1,15 @@
 {
   "name": "bluemonday_ship04",
-  "version": "1.0.0",
   "description": "Blue Monday @wiki",
-  "main": "Gruntfile.js",
-  "scripts": {
-    "postinstall": "bower install && grunt githooks",
-    "cocproxy": "ruby cocproxy/proxy.rb -c cocproxy/proxy-config.yaml",
-    "nproxy": "node nproxy/nproxy.js"
-  },
-  "author": "",
-  "license": "MIT",
+  "version": "1.0.0",
   "browser": {
     "oppai.js": "./bower_components/oppai.js/dist/oppai.min.js"
   },
   "browserify-shim": {
     "oppai.js": "Oppai"
+  },
+  "bugs": {
+    "url": "https://github.com/blue-monday/pso2-atwiki/issues"
   },
   "devDependencies": {
     "bower": "^1.3.9",
@@ -38,12 +33,16 @@
     "through": "^2.3.6",
     "time-grunt": "^0.4.0"
   },
+  "homepage": "https://github.com/blue-monday/pso2-atwiki",
+  "license": "MIT",
+  "main": "Gruntfile.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/blue-monday/pso2-atwiki.git"
   },
-  "bugs": {
-    "url": "https://github.com/blue-monday/pso2-atwiki/issues"
-  },
-  "homepage": "https://github.com/blue-monday/pso2-atwiki"
+  "scripts": {
+    "cocproxy": "ruby cocproxy/proxy.rb -c cocproxy/proxy-config.yaml",
+    "nproxy": "node nproxy/nproxy.js",
+    "postinstall": "bower install && grunt githooks"
+  }
 }
