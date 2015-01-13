@@ -2,15 +2,6 @@
   "name": "bluemonday_ship04",
   "version": "1.0.0",
   "authors": [],
-  "license": "MIT",
-  "private": true,
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
   "dependencies": {
     "bootstrap-sass-official": "~3.2.0",
     "fotorama": "~4.6.2",
@@ -22,5 +13,21 @@
     "toastr": "~2.1.0",
     "zeroclipboard": "~2.1.6"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "homepage": "https://github.com/blue-monday/pso2-atwiki",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "keywords": [],
+  "license": "MIT",
+  "main": [
+    "dist/scripts/main.js",
+    "dist/styles/main.css"
+  ],
+  "private": true,
+  "repository": "https://github.com/blue-monday/pso2-atwiki.git"
 }
