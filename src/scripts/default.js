@@ -19,10 +19,10 @@ var wiki = require('./atwiki-utils');
     add('logged-out');
 })();
 
-// hide js
+// hide main.js
 (function() {
   var timer = setInterval(function() {
-    var js = $('#menubar a[title*=".js "]');
+    var js = $('#menubar a[href$="/45.html"]');
     if (!js.length)
       return;
 
