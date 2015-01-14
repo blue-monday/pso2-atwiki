@@ -19,6 +19,26 @@ var wiki = require('./atwiki-utils');
     add('logged-out');
 })();
 
+// suppress ddsmoothmenu initialization
+(function() {
+  var ddsmoothmenu = window.ddsmoothmenu;
+  if (!ddsmoothmenu)
+    return;
+
+  ddsmoothmenu.getajaxmenu = hook;
+  ddsmoothmenu.buildmenu = hook;
+
+  function hook(jq, options) {
+    var mainmenuid = options.mainmenuid;
+
+    jq('style').each(function() {
+      var $this = jq(this);
+      if (~$this.text().indexOf('#' + mainmenuid))
+        $this.remove();
+    });
+  }
+})();
+
 // hide main.js
 (function() {
   var timer = setInterval(function() {
