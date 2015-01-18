@@ -85,7 +85,7 @@ module.exports = function(grunt) {
     watch: {
       styles: {
         files: ['src/styles/*.scss'],
-        tasks: ['sass:dev']
+        tasks: ['sass:dev', 'autoprefixer']
       },
       scripts: {
         files: ['*.js', 'src/scripts/{pages/,}*.js', '!src/scripts/all-plugins.js'],
@@ -140,6 +140,18 @@ module.exports = function(grunt) {
       }
     },
 
+    autoprefixer: {
+      options: {
+        browsers: ['last 2 version']
+      },
+      file: {
+        expand: true,
+        flatten: true,
+        src: 'dist/styles/*.css',
+        dest: 'dist/styles/'
+      },
+    },
+
     copy: {
       dist: {
         files: [{
@@ -188,6 +200,7 @@ module.exports = function(grunt) {
     'uglify',
     'sass_imports',
     'sass:dist',
+    'autoprefixer',
     'copy:dist'
   ]);
 
