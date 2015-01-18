@@ -63,7 +63,7 @@ module.exports = function(grunt) {
     uglify: {
       dist: {
         options: {
-          sourceMap: true
+          sourceMap: false
         },
         files: {
           'dist/scripts/main.js': ['dist/scripts/main.js']
@@ -85,7 +85,7 @@ module.exports = function(grunt) {
     watch: {
       styles: {
         files: ['src/styles/*.scss'],
-        tasks: ['sass']
+        tasks: ['sass:dev']
       },
       scripts: {
         files: ['*.js', 'src/scripts/{pages/,}*.js', '!src/scripts/all-plugins.js'],
@@ -121,13 +121,20 @@ module.exports = function(grunt) {
     },
 
     sass: {
-      options: {
-        style: 'compressed'
-      },
       dist: {
+        options: {
+          style: 'compressed'
+        },
         files: {
           'dist/styles/main.css': [
-            'src/styles/main.scss'
+          'src/styles/main.scss'
+          ]
+        }
+      },
+      dev: {
+        files: {
+          'dist/styles/main.css': [
+          'src/styles/main.scss'
           ]
         }
       }
@@ -180,7 +187,7 @@ module.exports = function(grunt) {
     'browserify',
     'uglify',
     'sass_imports',
-    'sass',
+    'sass:dist',
     'copy:dist'
   ]);
 
