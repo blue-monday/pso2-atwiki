@@ -27,7 +27,7 @@
     [// 動画倉庫
       ['pages/21.html', 'pages/57.html', 'pages/71.html'],
       require('./pages/movie')
-    ],
+    ]
   ];
 
   $.each(routes, function(i, rule) {

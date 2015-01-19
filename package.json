@@ -3,9 +3,11 @@
   "description": "Blue Monday @wiki",
   "version": "1.0.0",
   "browser": {
+    "cssua": "./src/lib/cssua.js",
     "oppai.js": "./bower_components/oppai.js/dist/oppai.min.js"
   },
   "browserify-shim": {
+    "cssua": "cssua",
     "oppai.js": "Oppai"
   },
   "bugs": {

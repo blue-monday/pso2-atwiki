@@ -109,10 +109,18 @@ body {
 			transform: rotateX(-90deg);
 			transition: 0.1s 0.2s;
 			backface-visibility: hidden;
+
+			.ua-ie-8 & {
+				display: none;
+			}
 		}
 
 		&.open > ul {
 			transform: none;
+
+			.ua-ie-8 & {
+				display: block;
+			}
 		}
 
 		li {

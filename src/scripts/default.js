@@ -1,6 +1,7 @@
 'use strict';
 
 var $ = require('jquery');
+require('cssua');
 require('sticky-kit');
 
 var wiki = require('./atwiki-utils');
