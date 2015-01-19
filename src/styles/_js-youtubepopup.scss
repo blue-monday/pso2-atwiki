@@ -3,7 +3,7 @@
 .youtube-popup {
 	position: fixed;
 	border-radius: $border-radius-base;
-	@include safe-rgba(background-color, 0, 0, 0, 0.9, #000);
+	background-color: rgba(0, 0, 0, 0.9);
 	color: #fff;
 
 	&-link {
@@ -13,6 +13,7 @@
 			text-decoration: none;
 		}
 	}
+
 	&-titlebar {
 		padding: 4px;
 		text-align: center;
@@ -23,14 +24,17 @@
 			float: right;
 			white-space: nowrap;
 		}
+
 		&-button {
 			width: 1.5em;
 			cursor: pointer;
 		}
 	}
+
 	&-videowrapper {
 		@include fluid-sizing(16/9, 30px);
 	}
+
 	&-timerecorder {
 		@extend .clearfix;
 		padding: 4px;
@@ -46,9 +50,11 @@
 				text-align: center;
 			}
 		}
+
 		.lap {
 			color: #9f9;
 		}
+
 		&-footer {
 			padding-left: 18px;
 
@@ -57,16 +63,18 @@
 				margin-left: -18px;
 				margin-right: 4px;
 				vertical-align: middle;
-				@include opacity(0.5);
+				opacity: 0.5;
 				cursor: default;
 
 				&.ready {
-					@include opacity(1);
+					opacity: 1;
 				}
+
 				&.zeroclipboard-is-active {
-					@include opacity(0.5);
+					opacity: 0.5;
 				}
 			}
+
 			.format {
 				display: inline-block;
 				width: 100%;

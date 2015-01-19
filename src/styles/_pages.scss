@@ -8,6 +8,7 @@
 	#wikibody > h2:first-child {
 		display: none;
 	}
+
 	.gallery {
 		margin: 0 -20px;
 		background-color: #000;
@@ -30,10 +31,11 @@
 			height: 5px;
 			margin: 1px;
 		}
+
 		.colorbar-cell {
 			display: inline-block;
 			height: 100%;
-			@include box-shadow(0 0 0 1px #fff);
+			box-shadow: 0 0 0 1px #fff;
 
 			$colors: #333, #de6641, #f2e55c, #39a869, #4784bf, #5d5099, #a55b9a;
 			@for $i from 0 to 7 {

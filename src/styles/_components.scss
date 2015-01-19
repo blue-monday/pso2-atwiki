@@ -1,17 +1,5 @@
 @charset "utf-8";
 
-@mixin transform($args...) {
-	-webkit-transform: $args;
-	-moz-transform: $args;
-	-ms-transform: $args;
-	transform: $args;
-}
-
-@mixin safe-rgba($prop, $r, $g, $b, $a, $color) {
-	#{$prop}: $color;
-	#{$prop}: rgba($r, $g, $b, $a);
-}
-
 @mixin default-box-shadow {
 	box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.5);
 }
@@ -38,6 +26,7 @@
 		text-decoration: underline;
 	}
 }
+
 .row {
 	@extend .clearfix;
 
@@ -48,6 +37,7 @@
 		}
 	}
 }
+
 .spinner {
 	width: 100%;
 	height: 100%;
