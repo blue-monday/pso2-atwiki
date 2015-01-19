@@ -127,14 +127,14 @@ module.exports = function(grunt) {
         },
         files: {
           'dist/styles/main.css': [
-          'src/styles/main.scss'
+            'src/styles/main.scss'
           ]
         }
       },
       dev: {
         files: {
           'dist/styles/main.css': [
-          'src/styles/main.scss'
+            'src/styles/main.scss'
           ]
         }
       }
