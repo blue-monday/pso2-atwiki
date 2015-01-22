@@ -3,15 +3,15 @@
   "version": "1.0.0",
   "authors": [],
   "dependencies": {
-    "bootstrap-sass": "^3.3.3",
-    "fotorama": "^4.6.3",
-    "jquery": "^1.11.2",
-    "jquery-cookie": "^1.4.1",
-    "jquery-ui": "^1.11.2",
+    "bootstrap-sass": "3.3.3",
+    "fotorama": "4.6.3",
+    "jquery": "1.11.2",
+    "jquery-cookie": "1.4.1",
+    "jquery-ui": "1.11.2",
     "oppai.js": "https://github.com/dameleon/oppai.js.git",
-    "sticky-kit": "^1.1.1",
-    "toastr": "^2.1.0",
-    "zeroclipboard": "^2.2.0"
+    "sticky-kit": "1.1.1",
+    "toastr": "2.1.0",
+    "zeroclipboard": "2.2.0"
   },
   "devDependencies": {},
   "homepage": "https://github.com/blue-monday/pso2-atwiki",
