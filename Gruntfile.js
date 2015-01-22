@@ -121,8 +121,12 @@ module.exports = function(grunt) {
     },
 
     sass: {
+      options: {
+        unixNewlines: true
+      },
       dist: {
         options: {
+          sourcemap: 'none',
           style: 'compressed'
         },
         files: {
