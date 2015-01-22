@@ -51,6 +51,16 @@ grunt-cli 入れてない人は入れてください
 $ npm install -g grunt-cli
 ```
 
+Ruby 入れてない人は入れてください
+
+<https://www.ruby-lang.org/ja/>
+
+Sass 入れてない人は入れてください
+
+```
+$ gem install sass
+```
+
 持ってきてインストール
 
 ```
