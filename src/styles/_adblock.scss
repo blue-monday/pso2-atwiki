@@ -1,16 +1,16 @@
 @charset "utf-8";
 
 .logged-in {
-	#left-ads,
-	#left-ads + div:last-child,
-	#right-ads,
-	#right-ads + div:last-child,
-	#ads {
-		@extend .hidden;
-	}
+  #left-ads,
+  #left-ads + div:last-child,
+  #right-ads,
+  #right-ads + div:last-child,
+  #ads {
+    @extend .hidden;
+  }
 
-	#at_social_links2,
-	#recommend {
-		@extend .hidden;
-	}
+  #at_social_links2,
+  #recommend {
+    @extend .hidden;
+  }
 }

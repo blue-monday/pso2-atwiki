@@ -3,83 +3,83 @@
 dl,
 ul,
 ol {
-	margin: 1em 0;
+  margin: 1em 0;
 
-	dl,
-	ul,
-	ol {
-		margin: 0;
-	}
+  dl,
+  ul,
+  ol {
+    margin: 0;
+  }
 }
 
 ul,
 ol {
-	padding-left: 20px;
+  padding-left: 20px;
 
 }
 
 dd {
-	margin-left: 2em;
+  margin-left: 2em;
 }
 
 table {
-	margin: 1em 0;
-	border: 1px solid #999;
-	vertical-align: middle;
+  margin: 1em 0;
+  border: 1px solid #999;
+  vertical-align: middle;
 
-	&[align='center'] > caption {
-		margin-left: auto;
-		margin-right: auto;
+  &[align='center'] > caption {
+    margin-left: auto;
+    margin-right: auto;
 
-		&[align='left'] {
-			margin-right: 0;
-		}
+    &[align='left'] {
+      margin-right: 0;
+    }
 
-		&[align='right'] {
-			margin-left: 0;
-		}
-	}
+    &[align='right'] {
+      margin-left: 0;
+    }
+  }
 
-	th,
-	td {
-		padding: 6px;
-		border: 1px solid #999;
-	}
+  th,
+  td {
+    padding: 6px;
+    border: 1px solid #999;
+  }
 
-	th {
-		font-weight: bold;
-		text-align: center;
-	}
+  th {
+    font-weight: bold;
+    text-align: center;
+  }
 }
 
 iframe {
-	border: none;
+  border: none;
 }
 
 blockquote,
 pre {
-	margin: 1em 0;
-	padding: 6px 10px;
-	border-left: 4px solid #6180a3;
-	background: #f8f3e6;
+  margin: 1em 0;
+  padding: 6px 10px;
+  border-left: 4px solid #6180a3;
+  background: #f8f3e6;
 }
 
 pre {
-	border-left-color: 4px solid #e44949;
+  border-left-color: 4px solid #e44949;
 }
 
 center {
-	display: block;
-	text-align: center;
+  display: block;
+  text-align: center;
 }
 
 a {
-	&:link {
-		text-decoration: none;
-		color: #03c;
-	}
+  &:link {
+    text-decoration: none;
+    color: #03c;
+  }
 
-	&:hover {
-		text-decoration: underline;
-	}
+  &:hover {
+    text-decoration: underline;
+  }
 }
