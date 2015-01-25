@@ -43,7 +43,7 @@ Plugin.prototype.run = function run(root, force) {
 
       option = $.extend({}, self.option.defaults, option);
 
-      if (hasProperty(option))
+      if (!$.isEmptyObject(option))
         $this.find(selectors.option).remove();
     }
 
@@ -67,14 +67,6 @@ Plugin.prototype.run = function run(root, force) {
     $this.addClass('initialized');
   });
 };
-
-function hasProperty(obj) {
-	/* jshint unused: false */
-  for (var p in obj)
-    return true;
-
-  return false;
-}
 
 function parseOption(element, transform) {
   var options = {};
