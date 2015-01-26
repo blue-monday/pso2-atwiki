@@ -13,7 +13,7 @@ util.registerPlugin({
     element.removeClass('hidden');
 
     if (!option.key)
-      throw new Error('エラー：key が指定されていません');
+      throw new Error('エラー：シートの key が指定されていません');
 
     element.css({height: 0, opacity: 0}).html('<div class="spinner"/>');
 
