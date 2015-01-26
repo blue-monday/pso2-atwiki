@@ -205,7 +205,8 @@ $(function() {
     var body = $('body');
     body.css({
       overflowX: 'hidden',
-      WebkitFilter: 'invert(100%)'
+      WebkitFilter: 'invert(100%)',
+      filter: 'invert(100%)'
     });
 
     var dulation = 10000;
