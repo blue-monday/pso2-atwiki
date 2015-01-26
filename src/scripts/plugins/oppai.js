@@ -11,11 +11,16 @@ util.registerPlugin({
       return str.match(/\d+/g).map(Number);
     }
 
-    if (key === 'left_vertex' || key === 'right_vertex')
-      value = getNumbers(value);
+    try {
+      if (key === 'left_vertex' || key === 'right_vertex')
+        value = getNumbers(value);
 
-    else if (key === 'left_round_coords' || key === 'right_round_coords')
-      value = value.match(/\d+\D+\d+/g).map(getNumbers);
+      else if (key === 'left_round_coords' || key === 'right_round_coords')
+        value = value.match(/\d+\D+\d+/g).map(getNumbers);
+
+    } catch (e) {
+      throw new Error(key + ' の指定が不正です\n例: right_vertex: (xx, yy)\nleft_round_coords: (xx, yy)(xx, yy)(xx, yy)');
+    }
 
     return value;
   },
@@ -38,7 +43,11 @@ util.registerPlugin({
       };
     }
 
-    var oppai = new Oppai(canvas[0], option.image_url, {enableTouch: true}, left, right);
+    var oppOpt = {
+      enableTouch: true
+    };
+
+    var oppai = new Oppai(canvas[0], option.image_url, oppOpt, left, right);
     oppai.load();
 
     var lastPos = 0;
