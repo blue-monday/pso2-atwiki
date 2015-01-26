@@ -1,5 +1,9 @@
-var path = require('path');
+'use strict';
 
-require('nproxy')(5432, {
-	responderListFilePath: path.join(__dirname, 'rules.js')
+var path = require('path');
+var rule = path.join(__dirname, 'rules.js');
+var port = 5432;
+
+require('nproxy')(port, {
+  responderListFilePath: rule
 });
