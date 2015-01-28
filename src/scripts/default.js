@@ -122,27 +122,16 @@ var wiki = require('./atwiki-utils');
 
 // pagetop
 (function() {
-  var shown = 0;
-
-  var styles = [
-    {bottom: '-120px', opacity: 0},
-    {bottom: '20px', opacity: 1}
-  ];
-
-  var link = $('<a href="#" id="pagetop">PAGE TOP</a>')
-    .css(styles[shown])
-    .appendTo('body');
+  var target = $('<a href="#" id="pagetop">PAGE TOP</a>');
+  target.appendTo('body');
 
   var win = $(window);
 
   win.scroll(function() {
     var top = win.scrollTop();
     var client = document.documentElement.clientHeight;
-    if (shown && client <= top || !shown && top < client)
-      return;
 
-    shown ^= 1;
-    link.stop().animate(styles[shown], 200);
+    target.toggleClass('off', top < client);
   });
 
   win.scroll();
