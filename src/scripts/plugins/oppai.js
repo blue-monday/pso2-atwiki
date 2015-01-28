@@ -52,9 +52,9 @@ util.registerPlugin({
 
     var lastPos = 0;
     var $window = $(window);
-    $window.scroll(function() {
+    $window.scroll(fnProxy(function() {
       var pos = $window.scrollTop();
-      var randX = Math.random() * 5;
+      var randX = (Math.random() * 11 | 0) - 5;
 
       if (pos < lastPos)
         oppai.swing(randX, 80, 3000);
@@ -63,8 +63,21 @@ util.registerPlugin({
         oppai.swing(randX, -80, 3000);
 
       lastPos = pos;
-    });
+    }, 200));
 
     return canvas;
   }
 });
+
+function fnProxy(fn, timeout) {
+  var lastTime = 0;
+
+  return function() {
+    var now = Date.now();
+    if (now < lastTime + timeout)
+      return;
+
+    lastTime = now;
+    fn.apply(this, arguments);
+  };
+}
