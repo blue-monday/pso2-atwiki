@@ -6,7 +6,9 @@ var glob = require('glob');
 var through = require('through');
 
 module.exports = function(grunt) {
-  require('load-grunt-tasks')(grunt);
+  require('jit-grunt')(grunt, {
+    sass_imports: 'grunt-scss-imports'
+  });
   require('time-grunt')(grunt);
 
   function globalJQ(rules) {
@@ -47,37 +49,10 @@ module.exports = function(grunt) {
       }
     },
 
-    jshint: {
-      options: {
-        jshintrc: true,
-        reporter: require('jshint-stylish')
-      },
-      all: {
-        src: [
-          '*.js',
-          'src/**/*.js'
-        ]
-      }
-    },
-
-    uglify: {
+    clean: {
       dist: {
-        options: {
-          sourceMap: false
-        },
         files: {
-          'dist/scripts/main.js': ['dist/scripts/main.js']
-        }
-      }
-    },
-
-    browserify: {
-      dist: {
-        options: {
-          transform: [globalJQ(['jquery-ui', 'fotorama', 'sticky-kit']), 'browserify-shim', 'debowerify']
-        },
-        files: {
-          'dist/scripts/main.js': ['src/scripts/main.js']
+          src: 'dist/*'
         }
       }
     },
@@ -97,10 +72,37 @@ module.exports = function(grunt) {
       }
     },
 
-    clean: {
+    jshint: {
+      options: {
+        jshintrc: true,
+        reporter: require('jshint-stylish')
+      },
+      all: {
+        src: [
+          '*.js',
+          'src/**/*.js'
+        ]
+      }
+    },
+
+    browserify: {
       dist: {
+        options: {
+          transform: [globalJQ(['jquery-ui', 'fotorama', 'sticky-kit']), 'browserify-shim', 'debowerify']
+        },
         files: {
-          src: 'dist/*'
+          'dist/scripts/main.js': ['src/scripts/main.js']
+        }
+      }
+    },
+
+    uglify: {
+      dist: {
+        options: {
+          sourceMap: false
+        },
+        files: {
+          'dist/scripts/main.js': ['dist/scripts/main.js']
         }
       }
     },
