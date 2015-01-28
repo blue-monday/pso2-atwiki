@@ -11,35 +11,6 @@ module.exports = function(grunt) {
   });
   require('time-grunt')(grunt);
 
-  function globalJQ(rules) {
-    return function(file) {
-      var filename = file.replace(/\\/g, '/');
-
-      var matched = rules.some(function(rule) {
-        if (rule instanceof RegExp && rule.test(filename) || typeof rule === 'string' && ~filename.indexOf(rule))
-          return true;
-      });
-
-      if (!matched)
-        return through();
-
-      var stream = through(write, end);
-      var data = ';(function(__ojq__, __jq__) {\nwindow.jQuery = window.$ = __jq__;\n';
-
-      function write(buf) {
-        data += buf;
-      }
-
-      function end() {
-        data += '\n;window.jQuery = window.$ = __ojq__;\n}).call(window, window.jQuery, require(\'jquery\'));';
-        stream.queue(data);
-        stream.queue(null);
-      }
-
-      return stream;
-    };
-  }
-
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
@@ -54,21 +25,6 @@ module.exports = function(grunt) {
         files: {
           src: 'dist/*'
         }
-      }
-    },
-
-    watch: {
-      styles: {
-        files: ['src/styles/*.scss'],
-        tasks: ['sass:dev', 'autoprefixer']
-      },
-      scripts: {
-        files: ['*.js', 'src/scripts/{pages/,}*.js', '!src/scripts/all-plugins.js'],
-        tasks: ['jshint', 'browserify']
-      },
-      plugins: {
-        files: ['src/scripts/plugins/*.js'],
-        tasks: ['plugin-require', 'jshint', 'browserify']
       }
     },
 
@@ -88,7 +44,7 @@ module.exports = function(grunt) {
     browserify: {
       dist: {
         options: {
-          transform: [globalJQ(['jquery-ui', 'fotorama', 'sticky-kit']), 'browserify-shim', 'debowerify']
+          transform: [jquerify(['jquery-ui', 'fotorama', 'sticky-kit']), 'browserify-shim', 'debowerify']
         },
         files: {
           'dist/scripts/main.js': ['src/scripts/main.js']
@@ -182,6 +138,25 @@ module.exports = function(grunt) {
           dest: 'dist'
         }]
       }
+    },
+
+    watch: {
+      styles: {
+        files: ['src/styles/*.scss'],
+        tasks: ['sass:dev', 'autoprefixer']
+      },
+      scripts: {
+        files: ['*.js', 'src/scripts/{pages/,}*.js', '!src/scripts/all-plugins.js'],
+        tasks: ['jshint', 'browserify']
+      },
+      plugins: {
+        files: ['src/scripts/plugins/*.js'],
+        tasks: ['jshint', 'plugin-require', 'browserify']
+      }
+    },
+
+    concurrent: {
+      build: ['build_js', 'build_css']
     }
   });
 
@@ -201,13 +176,20 @@ module.exports = function(grunt) {
   grunt.registerTask('build', [
     'jshint',
     'clean',
+    'concurrent:build',
+    'copy:dist'
+  ]);
+
+  grunt.registerTask('build_js', [
     'plugin-require',
     'browserify',
-    'uglify',
+    'uglify'
+  ]);
+
+  grunt.registerTask('build_css', [
     'sass_imports',
     'sass:dist',
-    'autoprefixer',
-    'copy:dist'
+    'autoprefixer'
   ]);
 
   grunt.registerTask('git-pre-commit', [
@@ -215,6 +197,34 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('default', [
-    'build',
+    'build'
   ]);
+
+  function jquerify(rules) {
+    return function(file) {
+      var filename = file.replace(/\\/g, '/');
+
+      var matched = rules.some(function(rule) {
+        return rule instanceof RegExp && rule.test(filename) || ~filename.indexOf(rule);
+      });
+
+      if (!matched)
+        return through();
+
+      var stream = through(write, end);
+      var data = ';(function(__ojq__, __jq__) {\nwindow.jQuery = window.$ = __jq__;\n';
+
+      function write(buf) {
+        data += buf;
+      }
+
+      function end() {
+        data += '\n;window.jQuery = window.$ = __ojq__;\n}).call(window, window.jQuery, require(\'jquery\'));';
+        stream.queue(data);
+        stream.queue(null);
+      }
+
+      return stream;
+    };
+  }
 };
