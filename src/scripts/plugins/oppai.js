@@ -2,6 +2,7 @@
 
 var util = require('../plugin-utils');
 var $ = require('jquery');
+var w = require('wrappers');
 var Oppai = require('oppai.js');
 
 util.registerPlugin({
@@ -52,7 +53,7 @@ util.registerPlugin({
 
     var lastPos = 0;
     var $window = $(window);
-    $window.scroll(fnProxy(function() {
+    $window.scroll(w.throttle(function() {
       var pos = $window.scrollTop();
       var randX = (Math.random() * 11 | 0) - 5;
 
@@ -68,16 +69,3 @@ util.registerPlugin({
     return canvas;
   }
 });
-
-function fnProxy(fn, timeout) {
-  var lastTime = 0;
-
-  return function() {
-    var now = Date.now();
-    if (now < lastTime + timeout)
-      return;
-
-    lastTime = now;
-    fn.apply(this, arguments);
-  };
-}

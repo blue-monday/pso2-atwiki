@@ -44,6 +44,7 @@ module.exports = function(grunt) {
     browserify: {
       dist: {
         options: {
+          exclude: ['./lib-cov/wrappers.js'],
           transform: [jquerify(['jquery-ui', 'fotorama', 'sticky-kit']), 'browserify-shim', 'debowerify']
         },
         files: {
