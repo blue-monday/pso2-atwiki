@@ -36,11 +36,10 @@ module.exports = function() {
     });
   });
 
-  /* global onYouTubePlayerReady:true */
-  if (typeof onYouTubePlayerReady === 'function')
-    var _onYouTubePlayerReady = onYouTubePlayerReady;
+  if (typeof window.onYouTubePlayerReady === 'function')
+    var _onYouTubePlayerReady = window.onYouTubePlayerReady;
 
-  onYouTubePlayerReady = function(playerid) {
+  window.onYouTubePlayerReady = function(playerid) {
     $('#' + playerid).trigger('youtube:playerready', [playerid]);
 
     if (_onYouTubePlayerReady)
