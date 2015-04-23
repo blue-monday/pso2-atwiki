@@ -6,7 +6,7 @@ var gsx = /^gsx\$/;
 module.exports = load;
 
 function load(key, callback) {
-  var url = 'http://www.corsproxy.com/spreadsheets.google.com/feeds/list/' + key + '/od6/public/values?alt=json&callback=?';
+  var url = 'http://crossorigin.me/https://spreadsheets.google.com/feeds/list/' + key + '/od6/public/values?alt=json&callback=?';
 
   return $.getJSON(url).then(function(data) {
     var rows = [];
