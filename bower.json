@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "authors": [],
   "dependencies": {
-    "bootstrap-sass": "3.3.3",
-    "fotorama": "4.6.3",
+    "bootstrap-sass": "3.3.4",
+    "fotorama": "4.6.4",
     "jquery": "1.11.2",
     "jquery-cookie": "1.4.1",
-    "jquery-ui": "1.11.2",
+    "jquery-ui": "1.11.4",
     "oppai.js": "https://github.com/dameleon/oppai.js.git",
     "sticky-kit": "1.1.1",
-    "toastr": "2.1.0",
+    "toastr": "2.1.1",
     "zeroclipboard": "2.2.0"
   },
   "devDependencies": {},
@@ -22,7 +22,6 @@
     "test",
     "tests"
   ],
-  "keywords": [],
   "license": "MIT",
   "main": [
     "dist/scripts/main.js",
