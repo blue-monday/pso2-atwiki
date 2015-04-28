@@ -36,24 +36,25 @@ module.exports = function() {
     });
   });
 
-  if (typeof onYouTubePlayerReady === 'function') {
-    window.onYouTubePlayerReady = (function() {
-      var original = window.onYouTubePlayerReady;
+  window.onYouTubePlayerReady = (function() {
+    var original = window.onYouTubePlayerReady;
 
-      return function(playerid) {
-        $('#' + playerid).trigger('youtube:playerready', [playerid]);
+    return function onYouTubePlayerReady(playerid) {
+      try {
+        $('#' + playerid).trigger('playerready', [playerid]);
+      } catch (e) {
+        console.log(e);
 
-        return original.apply(this, arguments);
-      };
-    })();
-  }
+      }
+
+      if (typeof original === 'function')
+        original.apply(this, arguments);
+    };
+  })();
 
   $(document)
+    .on('playerready', '.youtube-popup', toggleTimerecorder)
     .on('click', '.youtube-popup-link', onPopupLinkClick)
-    .on('youtube:playerready', '.youtube-popup', toggleTimerecorder)
-    .on('dblclick', '.youtube-popup-titlebar', function() {
-      $(this).closest('.youtube-popup').toggleClass('collapse-video');
-    })
     .on('click', '.youtube-popup-titlebar-buttons .btn-timerecorder', toggleTimerecorder)
     .on('click', '.youtube-popup-titlebar-buttons .btn-openprev', openNextPrev)
     .on('click', '.youtube-popup-titlebar-buttons .btn-opennext', openNextPrev)
@@ -228,7 +229,7 @@ module.exports = function() {
   }
 
   function onRecordButtonClick() {
-    // jshint validthis:true
+    /* jshint validthis:true */
     var $this = $(this);
     var popup = $this.closest('.youtube-popup');
     var object = popup.find('object');
@@ -267,7 +268,7 @@ module.exports = function() {
   }
 
   function toggleTimerecorder() {
-    // jshint validthis:true
+    /* jshint validthis:true */
     var popup = $(this);
 
     if (!popup.is('.youtube-popup'))
@@ -278,7 +279,7 @@ module.exports = function() {
   }
 
   function openNextPrev() {
-    // jshint validthis:true
+    /* jshint validthis:true */
     var $this = $(this);
     var diff = $this.hasClass('btn-opennext') ? 1 : -1;
     var popup = $this.closest('.youtube-popup');
@@ -299,7 +300,7 @@ module.exports = function() {
   }
 
   function closePopup() {
-    // jshint validthis:true
+    /* jshint validthis:true */
     $(this).closest('.youtube-popup').remove();
   }
 

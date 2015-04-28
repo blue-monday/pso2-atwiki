@@ -1,8 +1,5 @@
 'use strict';
 
-var fs = require('fs');
-var path = require('path');
-var glob = require('glob');
 var through = require('through');
 
 module.exports = function(grunt) {
@@ -45,7 +42,12 @@ module.exports = function(grunt) {
       dist: {
         options: {
           exclude: ['./lib-cov/wrappers.js'],
-          transform: [jquerify(['jquery-ui', 'fotorama', 'sticky-kit']), 'browserify-shim', 'debowerify']
+          transform: [
+            jquerify(['jquery-ui', 'fotorama', 'sticky-kit']),
+            'browserify-shim',
+            'debowerify',
+            'require-globify'
+          ]
         },
         files: {
           'dist/scripts/main.js': ['src/scripts/main.js']
@@ -152,26 +154,13 @@ module.exports = function(grunt) {
       },
       plugins: {
         files: ['src/scripts/plugins/*.js'],
-        tasks: ['jshint', 'plugin-require', 'browserify']
+        tasks: ['jshint', 'browserify']
       }
     },
 
     concurrent: {
       build: ['build_js', 'build_css']
     }
-  });
-
-  grunt.registerTask('plugin-require', function() {
-    var dir = 'src/scripts';
-    var files = glob.sync(dir + '/plugins/*.js');
-    var reqs = files.map(function(file) {
-      return 'require(\'' + file.replace(dir, '.') + '\');';
-    });
-    var body = '\'use strict\';\n\n// Auto generated. See grunt "plugin-require" task.\n' + reqs.join('\n') + '\n';
-    var filename = path.join(dir, 'all-plugins.js');
-    fs.writeFileSync(filename, body);
-
-    console.log('File "' + filename + '" created.');
   });
 
   grunt.registerTask('build', [
@@ -182,7 +171,6 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build_js', [
-    'plugin-require',
     'browserify',
     'uglify'
   ]);

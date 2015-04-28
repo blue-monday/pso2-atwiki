@@ -5,16 +5,20 @@ var $ = require('jquery');
 var selectors = {
   option: '> div:first-child:not([class])'
 };
-var plugins = [];
 
-module.exports.plugins = plugins;
-module.exports.parseOption = parseOption;
-module.exports.registerPlugin = registerPlugin;
-module.exports.runAll = runAll;
+module.exports = Plugin;
 
-function Plugin(option) {
-  this.option = option;
-  this.name = option.name;
+function Plugin(name, option) {
+  if (!(this instanceof Plugin))
+    return new Plugin(name, option);
+
+  if (typeof name === 'string')
+    option = $.extend({name: name}, option);
+
+  else if (!(option instanceof Object))
+    option = name;
+
+  $.extend(this, option);
 }
 
 Plugin.prototype.run = function run(root, force) {
@@ -33,15 +37,15 @@ Plugin.prototype.run = function run(root, force) {
 
     var option = {};
 
-    if (!self.option.noOption) {
+    if (!self.noOption) {
       try {
-        option = parseOption($this, self.option.transform);
+        option = self.parseOption($this);
       } catch (e) {
         except(e);
         return;
       }
 
-      option = $.extend({}, self.option.defaults, option);
+      option = $.extend({}, self.defaults, option);
 
       if (!$.isEmptyObject(option))
         $this.find(selectors.option).remove();
@@ -50,14 +54,14 @@ Plugin.prototype.run = function run(root, force) {
     var result;
 
     try {
-      result = self.option.callback.call(self, $this, option);
+      result = self.callback.call(self, $this, option);
     } catch (e) {
       except(e);
       return;
     }
 
     if (result) {
-      if (self.option.replace)
+      if (self.replace)
         $this.replaceWith(result);
 
       else
@@ -68,13 +72,14 @@ Plugin.prototype.run = function run(root, force) {
   });
 };
 
-function parseOption(element, transform) {
+Plugin.prototype.parseOption = function parseOption(element) {
+  var self = this;
   var options = {};
   var reg = /([\w$_-]+)[:：][ 　]*("(?:\\"|[^"])*"|.*[^\s　]|)/;
 
   var lines = element.find(selectors.option).text().split('\n');
 
-  $.each(lines, function(i, line) {
+  lines.forEach(function(line) {
     var kv = reg.exec(line);
 
     if (!kv)
@@ -98,28 +103,25 @@ function parseOption(element, transform) {
     else if (/^"(?:\\.|[^"])*"$/.test(value))
       value = value.slice(1, -1).replace(/\\(.)/g, '$1');
 
-    if (typeof transform === 'function')
-      value = transform(key, value, options);
+    if (typeof self.transform === 'function')
+      value = self.transform(key, value, options);
 
     options[key] = value;
   });
 
   return options;
-}
+};
 
-function registerPlugin(option) {
-  var plugin = new Plugin(option);
-  plugins.push(plugin);
+Plugin.prototype.activate = function activate(root, force) {
+  $($.proxy(this, 'run', root, force));
 
-  $(function() {
-    plugin.run();
+  return this;
+};
+
+Plugin.loadPlugins = function loadPlugins(root, force) {
+  var plugins = require('./plugins/*.js', {hash: true});
+
+  return $.map(plugins, function(opts, name) {
+    return new Plugin(name, opts).activate(root, force);
   });
-
-  return plugin;
-}
-
-function runAll(root, force) {
-  plugins.forEach(function(plugin) {
-    plugin.run(root, force);
-  });
-}
+};

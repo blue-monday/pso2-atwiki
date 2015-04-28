@@ -1,8 +1,9 @@
 'use strict';
 
 (function() {
-  var $ = require('jquery');
+  var toastr = require('toastr');
   var wiki = require('./atwiki-utils');
+  var plugins = require('./plugins');
 
   var currentPage = wiki.currentPage;
 
@@ -12,11 +13,11 @@
     return;
   }
 
-  var toastr = require('toastr');
   toastr.options.timeOut = 2000;
 
   require('./default');
-  require('./all-plugins');
+
+  plugins.loadPlugins();
 
   var routes = [
     [// トップ
@@ -30,8 +31,8 @@
     ]
   ];
 
-  $.each(routes, function(i, rule) {
-    if (~$.inArray(currentPage, rule[0]))
+  routes.forEach(function(rule) {
+    if (~rule[0].indexOf(currentPage))
       rule[1]();
   });
 })();

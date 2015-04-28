@@ -1,6 +1,5 @@
 'use strict';
 
-var util = require('../plugin-utils');
 var $ = require('jquery');
 
 var colors = {
@@ -14,11 +13,7 @@ var colors = {
   Bo: '#5b8300'
 };
 
-var keys = $.map(colors, function(v, k) {
-  return k;
-});
-
-var colorsReg = new RegExp(keys.join('|'), 'g');
+var colorsReg = new RegExp(Object.keys(colors).join('|'), 'g');
 
 var readerBodyStyle = {
   color: '#f00',
@@ -32,7 +27,7 @@ var nameStyle = {
 };
 
 function eachComment(i) {
-  // jshint validthis:true
+  /* jshint validthis:true */
   var self = $(this);
   var arr = /^ *(.+?) +-- +(.+?) +\(([^(]+)\)$/.exec(self.html());
   if (!arr)
@@ -73,12 +68,10 @@ function normChars(str) {
   return str;
 }
 
-util.registerPlugin({
-  name: 'comment-format',
-  noOption: true,
-  callback: function(element) {
-    element.find('ul').each(function() {
-      $(this).find('li').each(eachComment);
-    });
-  }
-});
+exports.noOption = true;
+
+exports.callback = function(element) {
+  element.find('ul').each(function() {
+    $(this).find('li').each(eachComment);
+  });
+};
