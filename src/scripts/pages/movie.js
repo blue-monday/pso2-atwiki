@@ -7,6 +7,6 @@ exports.rules = [
 ];
 
 exports.callback = function() {
-  require('../timecolorbar')();
-  require('../youtubepopup')();
+  require('../lib/timecolorbar')();
+  require('../lib/youtubepopup')();
 };

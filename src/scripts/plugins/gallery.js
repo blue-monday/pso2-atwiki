@@ -1,7 +1,7 @@
 'use strict';
 
 require('jquery');
-var loader = require('../sheetloader');
+var loadSheet = require('../lib/sheetloader');
 
 window.blockFotoramaData = true;
 require('fotorama');
@@ -19,7 +19,7 @@ exports.callback = function(element, option) {
 
   element.animate({height: height, opacity: 1}, 200);
 
-  loader(option.key)
+  loadSheet(option.key)
     .done(function(data) {
       data.forEach(function(item) {
         delete item.id;
