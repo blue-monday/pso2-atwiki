@@ -2,6 +2,8 @@
 
 var $ = require('jquery');
 
+var plugins = require('./wiki-plugins/*.js', {hash: true});
+
 var selectors = {
   option: '> div:first-child:not([class])'
 };
@@ -119,8 +121,6 @@ Plugin.prototype.activate = function activate(root, force) {
 };
 
 Plugin.loadPlugins = function loadPlugins(root, force) {
-  var plugins = require('./plugins/*.js', {hash: true});
-
   return $.map(plugins, function(opts, name) {
     return new Plugin(name, opts).activate(root, force);
   });

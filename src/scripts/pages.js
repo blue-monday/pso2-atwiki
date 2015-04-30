@@ -3,6 +3,8 @@
 var $ = require('jquery');
 var wiki = require('./atwiki-utils');
 
+var pages = require('./page-plugins/*.js', {hash: true});
+
 module.exports = Page;
 
 function Page(name, option) {
@@ -49,8 +51,6 @@ Page.prototype.run = function run() {
 };
 
 Page.loadPages = function loadPages() {
-  var pages = require('./pages/*.js', {hash: true});
-
   return $.map(pages, function(opts, name) {
     return new Page(name, opts).run();
   });

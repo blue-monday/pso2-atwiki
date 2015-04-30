@@ -149,7 +149,7 @@ module.exports = function(grunt) {
         tasks: ['sass:dev', 'autoprefixer']
       },
       scripts: {
-        files: ['*.js', 'src/scripts/{pages/,}*.js', '!src/scripts/all-plugins.js'],
+        files: ['*.js', 'src/scripts/**/*.js'],
         tasks: ['jshint', 'browserify']
       },
       plugins: {
