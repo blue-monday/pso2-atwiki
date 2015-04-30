@@ -1,14 +1,12 @@
 'use strict';
 
-(function() {
-  var plugins = require('./plugins');
-  var pages = require('./pages');
+require('cssua');
 
-  var toastr = require('toastr');
-  toastr.options.timeOut = 2000;
+var toastr = require('toastr');
+toastr.options.timeOut = 2000;
 
-  require('./default');
+var pages = require('./pages');
+var plugins = require('./plugins');
 
-  pages.loadPages();
-  plugins.loadPlugins();
-})();
+pages.loadPages();
+plugins.loadPlugins();

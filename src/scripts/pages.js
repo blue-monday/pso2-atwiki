@@ -16,12 +16,33 @@ function Page(name, option) {
     option = name;
 
   $.extend(this, option);
+
+  this.init();
 }
+
+Page.prototype.init = function() {
+  if (!this.rules)
+    this.rules = [];
+
+  if (!Array.isArray(this.rules))
+    this.rules = [this.rules];
+};
+
+Page.prototype.test = function(current) {
+  current += '';
+
+  return this.rules.some(function(rule) {
+    if (rule && typeof rule.test === 'function')
+      return rule.test(current);
+
+    return rule === current;
+  });
+};
 
 Page.prototype.run = function run() {
   var currentPage = wiki.currentPage;
 
-  if (~this.rules.indexOf(currentPage))
+  if (this.test(currentPage))
     this.callback.apply(this, arguments);
 
   return this;
