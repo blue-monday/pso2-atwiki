@@ -48,6 +48,7 @@
   "scripts": {
     "cocproxy": "ruby cocproxy/proxy.rb -c cocproxy/proxy-config.yaml",
     "nproxy": "node nproxy/nproxy.js",
+    "proxy": "node nproxy/nproxy.js",
     "postinstall": "bower install && grunt githooks"
   }
 }
