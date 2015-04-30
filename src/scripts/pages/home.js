@@ -1,3 +1,9 @@
 'use strict';
 
-module.exports = function() {};
+exports.rules = [
+  '',
+  'pages/15.html'
+];
+
+exports.callback = function() {
+};

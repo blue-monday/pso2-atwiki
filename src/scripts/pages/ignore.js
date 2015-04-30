@@ -1,5 +1,9 @@
 'use strict';
 
-module.exports = function() {
+exports.rules = [
+  'pages/45.html'
+];
+
+exports.callback = function() {
   location.replace('../');
 };
