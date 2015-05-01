@@ -1,7 +1,5 @@
 'use strict';
 
-var through = require('through');
-
 module.exports = function(grunt) {
   require('jit-grunt')(grunt, {
     sass_imports: 'grunt-scss-imports'
@@ -43,7 +41,6 @@ module.exports = function(grunt) {
         options: {
           exclude: ['./lib-cov/wrappers.js'],
           transform: [
-            jquerify(['jquery-ui', 'fotorama', 'sticky-kit']),
             'browserify-shim',
             'debowerify',
             'require-globify'
@@ -73,9 +70,9 @@ module.exports = function(grunt) {
       dist: {
         files: {
           'src/styles/_imports.scss': [
-            'bower_components/jquery-ui/themes/base/{core,draggable,resizable}.css',
-            'bower_components/fotorama/fotorama.css',
-            'bower_components/toastr/toastr.css'
+            'node_modules/jquery-ui/themes/base/jquery.ui.{core,resizable}.css',
+            'node_modules/fotorama/fotorama.css',
+            'node_modules/toastr/toastr.css'
           ]
         }
       }
@@ -121,7 +118,7 @@ module.exports = function(grunt) {
       dist: {
         files: [{
           expand: true,
-          cwd: 'bower_components/fotorama',
+          cwd: 'node_modules/fotorama',
           src: ['*.png'],
           dest: 'dist/styles'
         }, {
@@ -131,12 +128,12 @@ module.exports = function(grunt) {
           dest: 'dist/styles'
         }, {
           expand: true,
-          cwd: 'bower_components/zeroclipboard/dist',
+          cwd: 'node_modules/zeroclipboard/dist',
           src: ['*.swf'],
           dest: 'dist/scripts'
         }, {
           expand: true,
-          cwd: 'bower_components/bootstrap-sass/assets',
+          cwd: 'node_modules/bootstrap-sass/assets',
           src: ['fonts/**'],
           dest: 'dist'
         }]
@@ -188,32 +185,4 @@ module.exports = function(grunt) {
   grunt.registerTask('default', [
     'build'
   ]);
-
-  function jquerify(rules) {
-    return function(file) {
-      var filename = file.replace(/\\/g, '/');
-
-      var matched = rules.some(function(rule) {
-        return rule instanceof RegExp && rule.test(filename) || ~filename.indexOf(rule);
-      });
-
-      if (!matched)
-        return through();
-
-      var stream = through(write, end);
-      var data = ';(function(__ojq__, __jq__) {\nwindow.jQuery = window.$ = __jq__;\n';
-
-      function write(buf) {
-        data += buf;
-      }
-
-      function end() {
-        data += '\n;window.jQuery = window.$ = __ojq__;\n}).call(window, window.jQuery, require(\'jquery\'));';
-        stream.queue(data);
-        stream.queue(null);
-      }
-
-      return stream;
-    };
-  }
 };

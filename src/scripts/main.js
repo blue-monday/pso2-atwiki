@@ -2,6 +2,13 @@
 
 require('cssua');
 
+var ZeroClipboard = require('zeroclipboard');
+ZeroClipboard.config({
+  title: 'クリップボードにコピー',
+  forceHandCursor: true,
+  debug: false
+});
+
 var toastr = require('toastr');
 toastr.options.timeOut = 2000;
 

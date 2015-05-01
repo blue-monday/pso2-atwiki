@@ -4,20 +4,23 @@
   "version": "1.0.0",
   "browser": {
     "cssua": "./src/lib/cssua.js",
-    "oppai.js": "./bower_components/oppai.js/dist/oppai.min.js"
+    "fotorama": "fotorama/fotorama",
+    "oppai.js": "./node_modules/oppai.js/dist/oppai.min.js"
   },
   "browserify-shim": {
     "cssua": "cssua",
-    "oppai.js": "Oppai"
+    "oppai.js": "global:Oppai"
   },
   "bugs": {
     "url": "https://github.com/blue-monday/pso2-atwiki/issues"
   },
   "devDependencies": {
+    "bootstrap-sass": "3.3.4",
     "bower": "1.4.1",
-    "browserify": "9.0.8",
-    "browserify-shim": "3.8.5",
+    "browserify": "10.0.0",
+    "browserify-shim": "3.8.6",
     "debowerify": "1.2.1",
+    "fotorama": "4.6.4",
     "glob": "5.0.5",
     "grunt": "0.4.5",
     "grunt-autoprefixer": "3.0.0",
@@ -32,12 +35,16 @@
     "grunt-githooks": "0.3.1",
     "grunt-scss-imports": "0.0.2",
     "jit-grunt": "0.9.1",
+    "jquery-ui": "1.10.5",
     "jshint-stylish": "1.0.1",
     "nproxy": "1.4.4",
+    "oppai.js": "git+https://github.com/dameleon/oppai.js.git",
     "require-globify": "1.1.0",
     "through": "2.3.7",
     "time-grunt": "1.1.1",
-    "wrappers": "0.2.2"
+    "toastr": "2.0.4",
+    "wrappers": "0.2.2",
+    "zeroclipboard": "2.2.0"
   },
   "homepage": "https://github.com/blue-monday/pso2-atwiki",
   "license": "MIT",

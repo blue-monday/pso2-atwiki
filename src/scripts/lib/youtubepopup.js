@@ -1,24 +1,15 @@
 'use strict';
 
 var $ = require('jquery');
+
 var ZeroClipboard = require('zeroclipboard');
 var toastr = require('toastr');
 
-// deamdify does not work...
-require('jquery-ui/ui/core');
-require('jquery-ui/ui/widget');
-require('jquery-ui/ui/mouse');
-require('jquery-ui/ui/position');
-require('jquery-ui/ui/draggable');
-require('jquery-ui/ui/resizable');
+require('jquery-ui/position');
+require('jquery-ui/draggable');
+require('jquery-ui/resizable');
 
 module.exports = function() {
-  ZeroClipboard.config({
-    title: 'クリップボードにコピー',
-    forceHandCursor: true,
-    debug: false
-  });
-
   var btn = $('<a/>').addClass('youtube-popup-link glyphicon glyphicon-film');
 
   $(function() {

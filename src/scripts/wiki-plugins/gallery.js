@@ -1,6 +1,5 @@
 'use strict';
 
-require('jquery');
 var loadSheet = require('../lib/sheetloader');
 
 window.blockFotoramaData = true;
