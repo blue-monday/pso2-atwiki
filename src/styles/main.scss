@@ -52,11 +52,11 @@ body {
   display: table-row;
   margin: 0;
   padding: 0;
-  z-index: 100;
 
   > li {
     display: table-cell;
     text-align: center;
+    z-index: 100;
 
     a {
       padding: 0 1em;
